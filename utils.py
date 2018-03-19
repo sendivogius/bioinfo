@@ -9,51 +9,67 @@ def reverse_strand(text):
     mappings = {'C': 'G', 'G': 'C', 'A': 'T', 'T': 'A'}
     return ''.join([mappings[nn] for nn in text[::-1]])
 
+def get_all_kmers(pattern, k):
+    return {pattern[i:i+k] for i in range(len(pattern) - k + 1)}
 
-def find_occurrences(text, pattern):
+def find_occurrences(text, pattern, k=0):
     """get indexes of (possibly overlapping) occurrences of pattern in text"""
-    return [i for i in range(len(text) - len(pattern) + 1) if text[i:i + len(pattern)] == pattern]
+    return [i for i in range(len(text) - len(pattern) + 1) if hamming(text[i:i + len(pattern)], pattern) <= k]
 
 
-def count_occurrences(text, pattern):
+def count_occurrences(text, pattern, k=0):
     """count number of (possibly overlapping) occurrences of pattern in text"""
-    return len(find_occurrences(text, pattern))
+    return len(find_occurrences(text, pattern, k))
 
 
-def frequent_kmers(text, k):
+def frequent_kmers(text, k, d=0, reverse=False):
     """
-    Get most frequent kmers in string
+    Get most frequent kmers in string with up to d mismatches
     Returns ( {kmer1, kmer2}, num_of_occurences )
     """
-    l = list(text[i:i + k] for i in range(len(text) - k + 1))
-    counts = collections.Counter(l)
-    max_cnt = counts.most_common(1)[0][1]
-    return set(map(operator.itemgetter(0), takewhile(lambda x: x[1] >= max_cnt, counts.most_common()))), max_cnt
+    max_kmers = []
+    max_kmers_cnt = 0
+
+    reversed = reverse_strand(text) if reverse else ''
+
+    kmers = get_all_kmers(text, k)
+    print('kmers', len(kmers))
+    kmers_neghbourhood = {p for kmer in kmers for p in get_neighbourhs(kmer, d)}
+    print('kmers_neghbourhood', len(kmers_neghbourhood))
+    for i, kmer in enumerate(kmers_neghbourhood):
+        kmer_counts = count_occurrences(text, kmer, d) + count_occurrences(reversed, kmer, d)
+        if kmer_counts == max_kmers_cnt:
+            max_kmers.append(kmer)
+        elif kmer_counts > max_kmers_cnt:
+            max_kmers = [kmer]
+            max_kmers_cnt = kmer_counts
+        if i % 5000 == 0:
+            print(i)
+    return set(max_kmers), max_kmers_cnt
 
 
-def find_clumps(text, k, L, t):
-    """
-    Find all distinct k-mers forming (L, t)-clumps in Genome.
+def _get_neighbourhs(pattern):
+    bases = 'ACTG'
+    result = set()
+    for i in range(len(pattern)):
+        for base in bases:
+            result.add( pattern[:i]+base+pattern[(i+1):] )
+    return result
 
-    :param text: DNA
-    :param k: length of kmers
-    :param L: ori length
-    :param t: minimum number of occurences of kmer in L
-    :return:
-    """
-    all_kmers = set()
-    for start in range(0, len(text) - L + 1):
-        kmers, max_cnt = frequent_kmers(text[start:start + L], k)
-        if max_cnt >= t:
-            all_kmers.update(kmers)
 
-    return all_kmers
-
+def get_neighbourhs(pattern, d):
+    result = set([pattern])
+    for i in range(d):
+        addded = set()
+        for pattern in result:
+            addded |= _get_neighbourhs(pattern)
+        result |= addded
+    return result
 
 def get_keys_(dict_, t):
     return {k for (k,v) in dict_.items() if v >= t}
 
-def find_clumps_opti(text, k, L, t):
+def find_clumps(text, k, L, t):
     """
     Find all distinct k-mers forming (L, t)-clumps in Genome.
 
@@ -98,3 +114,39 @@ def compute_frequencies(text, k):
         num = pattern_to_number(text[start:start + k])
         freq_array[num] += 1
     return freq_array
+
+
+def get_skew(dna, down='C', up='G'):
+    skew = [0]*(len(dna)+1)
+    for i, b in enumerate(dna, 1):
+        if b == down:
+            skew[i] = skew[i-1]-1
+        elif b == up:
+            skew[i] = skew[i - 1] + 1
+        else:
+            skew[i] = skew[i-1]
+    return skew
+
+def get_min_skew_posiion(dna, down='C', up='G'):
+    skew = get_skew(dna, down,  up)
+    min_skew = min(skew)
+    return [pos for (pos, sk) in enumerate(skew) if sk == min_skew]
+
+
+def plot_skew(dna, down='C', up='G'):
+    skew = get_skew(dna, down, up)
+    import matplotlib.pyplot as plt
+    plt.plot(skew, '-')
+    plt.title('Skew plot {}-{}'.format(up, down))
+    plt.ylabel('skew')
+    plt.xlabel('position')
+    plt.show()
+
+
+def hamming(dna1, dna2):
+    assert(len(dna1) == len(dna2))
+    return sum(a != b for a, b in zip(dna1, dna2))
+
+if __name__ == "__main__":
+    ecoli = open('data\\E_coli.txt').readline()
+    plot_skew('TAAAGACTGCCGAGAGGCCAACACGAGTGCTAGAACGAGGGGCGTAAACGCGGGTCCGAT')
