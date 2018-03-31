@@ -3,14 +3,17 @@ from collections import defaultdict
 from datetime import datetime
 from itertools import takewhile
 import operator
+from math import log2
 
 
 def reverse_strand(text):
     mappings = {'C': 'G', 'G': 'C', 'A': 'T', 'T': 'A'}
     return ''.join([mappings[nn] for nn in text[::-1]])
 
+
 def get_all_kmers(pattern, k):
-    return {pattern[i:i+k] for i in range(len(pattern) - k + 1)}
+    return {pattern[i:i + k] for i in range(len(pattern) - k + 1)}
+
 
 def find_occurrences(text, pattern, k=0):
     """get indexes of (possibly overlapping) occurrences of pattern in text"""
@@ -53,7 +56,7 @@ def _get_neighbourhs(pattern):
     result = set()
     for i in range(len(pattern)):
         for base in bases:
-            result.add( pattern[:i]+base+pattern[(i+1):] )
+            result.add(pattern[:i] + base + pattern[(i + 1):])
     return result
 
 
@@ -66,8 +69,10 @@ def get_neighbourhs(pattern, d):
         result |= addded
     return result
 
+
 def get_keys_(dict_, t):
-    return {k for (k,v) in dict_.items() if v >= t}
+    return {k for (k, v) in dict_.items() if v >= t}
+
 
 def find_clumps(text, k, L, t):
     """
@@ -117,18 +122,19 @@ def compute_frequencies(text, k):
 
 
 def get_skew(dna, down='C', up='G'):
-    skew = [0]*(len(dna)+1)
+    skew = [0] * (len(dna) + 1)
     for i, b in enumerate(dna, 1):
         if b == down:
-            skew[i] = skew[i-1]-1
+            skew[i] = skew[i - 1] - 1
         elif b == up:
             skew[i] = skew[i - 1] + 1
         else:
-            skew[i] = skew[i-1]
+            skew[i] = skew[i - 1]
     return skew
 
+
 def get_min_skew_posiion(dna, down='C', up='G'):
-    skew = get_skew(dna, down,  up)
+    skew = get_skew(dna, down, up)
     min_skew = min(skew)
     return [pos for (pos, sk) in enumerate(skew) if sk == min_skew]
 
@@ -144,8 +150,37 @@ def plot_skew(dna, down='C', up='G'):
 
 
 def hamming(dna1, dna2):
-    assert(len(dna1) == len(dna2))
+    assert (len(dna1) == len(dna2))
     return sum(a != b for a, b in zip(dna1, dna2))
+
+
+def get_profile(motifs, relative=True):
+    zeroes = {'A': 0, 'G': 0, 'T': 0, 'C': 0}
+    absolute = [{**zeroes, **dict(collections.Counter(m))} for m in zip(*motifs)]
+    if relative:
+        return [{k: v / total for total in (sum(a.values(), 0.0),) for k, v in a.items()} for a in absolute]
+    return absolute
+
+
+def get_consensus_string(motifs, profile=None):
+    profile = profile or get_profile(motifs)
+    return ''.join(max(m.items(), key=operator.itemgetter(1))[0] for m in profile)
+
+def score_motifs(motifs, entropy=False):
+    if entropy:
+        def _calc_entropy(values):
+            return sum(-v * log2(v) if v else 0.0  for v in values)
+
+        profile = get_profile(motifs, relative=True)
+        return sum(_calc_entropy(val.values()) for val in profile)
+
+    profile = get_profile(motifs, relative=False)
+    consensus = get_consensus_string(motifs)
+    return sum( (sum({**p, **{c:0}}.values()) for c, p in zip(consensus, profile)) )
+
+
+
+
 
 if __name__ == "__main__":
     ecoli = open('data\\E_coli.txt').readline()

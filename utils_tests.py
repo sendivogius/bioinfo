@@ -140,12 +140,32 @@ class UtilsTests(unittest.TestCase):
         expected = {'CAA', 'AAT', 'AAG', 'AAC', 'AAA', 'AGA', 'TAA', 'GAA', 'ACA', 'ATA'}
         self.assertEqual(expected, utils.get_neighbourhs(pattern, d))
 
-
     def test_get_all_kmers(self):
         pattern = 'GGACCGTTGAC'
         k = 5
         expected = {'GGACC', 'GACCG','ACCGT','CCGTT','CGTTG','GTTGA','TTGAC'}
         self.assertEqual(expected, utils.get_all_kmers(pattern, k))
+
+    def test_get_profile(self):
+        patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC', 'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
+        self.assertEqual([{'A':2,'C':1,'G':0,'T':7},{'A':2,'C':6,'G':0,'T':2},{'A':0,'C':0,'G':10,'T':0},{'A':0,'C':0,'G':10,'T':0},{'A':0,'C':0,'G':9,'T':1},{'A':0,'C':0,'G':9,'T':1},{'A':9,'C':0,'G':1,'T':0},{'A':1,'C':4,'G':0,'T':5},{'A':1,'C':1,'G':0,'T':8},{'A':1,'C':2,'G':0,'T':7},{'A':3,'C':4,'G':0,'T':3},{'A':0,'C':6,'G':0,'T':4},], utils.get_profile(patterns, relative=False))
+
+    def test_get_profile_relative(self):
+        patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC', 'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
+        self.assertEqual([{'A':.2,'C':.1,'G':0,'T':.7},{'A':.2,'C':.6,'G':0,'T':.2},{'A':0,'C':0,'G':1,'T':0},{'A':0,'C':0,'G':1,'T':0},{'A':0,'C':0,'G':.9,'T':.1},{'A':0,'C':0,'G':.9,'T':.1},{'A':.9,'C':0,'G':.1,'T':0},{'A':.1,'C':.4,'G':0,'T':.5},{'A':.1,'C':.1,'G':0,'T':.8},{'A':.1,'C':.2,'G':0,'T':.7},{'A':.3,'C':.4,'G':0,'T':.3},{'A':0,'C':.6,'G':0,'T':.4},], utils.get_profile(patterns))
+
+    def test_get_consensus_string(self):
+        patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC', 'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
+        self.assertEqual('TCGGGGATTTCC', utils.get_consensus_string(patterns))
+
+    def test_score_motif_simple(self):
+        patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC', 'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
+        self.assertEqual(30, utils.score_motifs(patterns))
+
+    def test_score_motif_accurate(self):
+        patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC', 'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
+        self.assertAlmostEqual(9.9163, utils.score_motifs(patterns, entropy=True), places=4)
+
 
 if __name__ == '__main__':
     unittest.main()
