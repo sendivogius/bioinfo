@@ -5,6 +5,8 @@ from itertools import takewhile
 import operator
 from math import log2
 
+import itertools
+
 
 def reverse_strand(text):
     mappings = {'C': 'G', 'G': 'C', 'A': 'T', 'T': 'A'}
@@ -166,20 +168,32 @@ def get_consensus_string(motifs, profile=None):
     profile = profile or get_profile(motifs)
     return ''.join(max(m.items(), key=operator.itemgetter(1))[0] for m in profile)
 
+
 def score_motifs(motifs, entropy=False):
     if entropy:
         def _calc_entropy(values):
-            return sum(-v * log2(v) if v else 0.0  for v in values)
+            return sum(-v * log2(v) if v else 0.0 for v in values)
 
         profile = get_profile(motifs, relative=True)
         return sum(_calc_entropy(val.values()) for val in profile)
 
     profile = get_profile(motifs, relative=False)
     consensus = get_consensus_string(motifs)
-    return sum( (sum({**p, **{c:0}}.values()) for c, p in zip(consensus, profile)) )
+    return sum((sum({**p, **{c: 0}}.values()) for c, p in zip(consensus, profile)))
 
 
+def dist(pattern, dna):
+    def dist_to_single_dna(p, d):
+        return min(hamming(p, kmer) for kmer in get_all_kmers(d, len(p)))
 
+    if type(dna) == str:
+        dna = [dna]
+    return sum(dist_to_single_dna(pattern, d) for d in dna)
+
+
+def median_string(dna, k):
+    all_kmers = map(''.join, itertools.product('ACTG', repeat=k))
+    return min(((kmer, dist(kmer, dna)) for kmer in all_kmers), key=operator.itemgetter(1))
 
 
 if __name__ == "__main__":

@@ -166,6 +166,17 @@ class UtilsTests(unittest.TestCase):
         patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC', 'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
         self.assertAlmostEqual(9.9163, utils.score_motifs(patterns, entropy=True), places=4)
 
+    def test_dist_pattern_single_dna(self):
+        self.assertEqual(1, utils.dist('AAA', 'TTACCTTAAC'))
+
+    def test_dist_pattern_dna(self):
+        patterns = ['TTACCTTAAC', 'GATATCTGTC', 'ACGGCGTTCG', 'CCCTAAAGAG', 'CGTCAGAGGT']
+        self.assertEqual(5, utils.dist('AAA',  patterns))
+
+    def test_median_string(self):
+        patterns = ['AGTAAGTCTGAACGGCTAATTGCGCGATACTCACATAATGTC', 'ATTTCACTTCATTTACTGGGATATAGCATTCTCACTCGGCTA', 'TGGGACATCCAGGGCAGACGGGGCGCCGCAGTTTCGCGGCTT', 'TCTCCCCGACCCCGGCTCTCCGATAACCCTTCGCAGAAATGT', 'TTCTCGTGGCCACTATGCCCTCGACGAGGTAAACCTCGGCTG',
+                    'ATCGCCCGGCTCGATCTTGTAAAGCGATAAGTTCTTCCACAT', 'GGAAGACGGCTCTACAGTAGCACGAAGCATGCGACGCGCCGC', 'TCTGCTGGTTGGAGCTCGCGGCTTATGCGTCCTCTTTCTAAG', 'CTCATTGCGTGCCGTTGGGGTCAGCTAGTACGGCTCGTATTC', 'ATTGTGTATGGTGATGCTTGGAAAAGCAATGGGCTTCGGCTA']
+        self.assertEqual(('GAC', 2), utils.median_string(patterns, 6))
 
 if __name__ == '__main__':
     unittest.main()
