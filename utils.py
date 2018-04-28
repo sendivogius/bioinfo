@@ -1,4 +1,5 @@
 import collections
+import functools
 from collections import defaultdict
 from datetime import datetime
 from itertools import takewhile
@@ -13,9 +14,11 @@ def reverse_strand(text):
     return ''.join([mappings[nn] for nn in text[::-1]])
 
 
-def get_all_kmers(pattern, k):
-    return {pattern[i:i + k] for i in range(len(pattern) - k + 1)}
-
+def get_all_kmers(pattern, k, ordered=False):
+    ordered_kmers = [pattern[i:i + k] for i in range(len(pattern) - k + 1)]
+    if ordered:
+        return ordered_kmers
+    return set(ordered_kmers)
 
 def find_occurrences(text, pattern, k=0):
     """get indexes of (possibly overlapping) occurrences of pattern in text"""
@@ -38,9 +41,7 @@ def frequent_kmers(text, k, d=0, reverse=False):
     reversed = reverse_strand(text) if reverse else ''
 
     kmers = get_all_kmers(text, k)
-    print('kmers', len(kmers))
     kmers_neghbourhood = {p for kmer in kmers for p in get_neighbourhs(kmer, d)}
-    print('kmers_neghbourhood', len(kmers_neghbourhood))
     for i, kmer in enumerate(kmers_neghbourhood):
         kmer_counts = count_occurrences(text, kmer, d) + count_occurrences(reversed, kmer, d)
         if kmer_counts == max_kmers_cnt:
@@ -194,6 +195,26 @@ def dist(pattern, dna):
 def median_string(dna, k):
     all_kmers = map(''.join, itertools.product('ACTG', repeat=k))
     return min(((kmer, dist(kmer, dna)) for kmer in all_kmers), key=operator.itemgetter(1))
+
+def score_kmer_on_profile(kmer, profile):
+    assert(len(kmer) == len(profile))
+    proba_kmer = list((p[k] for p,k in zip(profile, kmer)))
+    return functools.reduce(operator.mul, proba_kmer, 1)
+
+def most_probable_kmer_from_profile(profile, text):
+    return max([(score_kmer_on_profile(kmer, profile), kmer) for kmer in get_all_kmers(text, len(profile), True)], key=operator.itemgetter(0))
+
+def greedy_motif_search(dna, k):
+    best_motifs = [d[:k] for d in dna]
+    for kmer in get_all_kmers(dna[0], k):
+        motifs = [kmer]
+        for i in range(1,len(dna)):
+            profile = get_profile(motifs)
+            motif = most_probable_kmer_from_profile(profile, dna[i])
+            motifs.append(motif[1])
+        if score_motifs(motifs) < score_motifs(best_motifs):
+            best_motifs = motifs
+    return best_motifs
 
 
 if __name__ == "__main__":
