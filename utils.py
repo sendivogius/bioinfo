@@ -1,12 +1,12 @@
 import collections
 import functools
 from collections import defaultdict
-from datetime import datetime
-from itertools import takewhile
 import operator
 from math import log2
+from numpy.random import choice
 
 import itertools
+from random import randrange
 
 
 def reverse_strand(text):
@@ -19,6 +19,7 @@ def get_all_kmers(pattern, k, ordered=False):
     if ordered:
         return ordered_kmers
     return set(ordered_kmers)
+
 
 def find_occurrences(text, pattern, k=0):
     """get indexes of (possibly overlapping) occurrences of pattern in text"""
@@ -157,12 +158,14 @@ def hamming(dna1, dna2):
     return sum(a != b for a, b in zip(dna1, dna2))
 
 
-def get_profile(motifs, relative=True):
-    zeroes = {'A': 0, 'G': 0, 'T': 0, 'C': 0}
-    absolute = [{**zeroes, **dict(collections.Counter(m))} for m in zip(*motifs)]
+def get_profile(motifs, relative=True, pseudocounts=False):
+    zeroes = dict(itertools.zip_longest('ACTG', [], fillvalue=0))
+    counts = [{**zeroes, **dict(collections.Counter(m))} for m in zip(*motifs)]
+    if pseudocounts:
+        counts = [{k: v + 1 for k, v in a.items()} for a in counts]
     if relative:
-        return [{k: v / total for total in (sum(a.values(), 0.0),) for k, v in a.items()} for a in absolute]
-    return absolute
+        return [{k: v / total for total in (sum(a.values(), 0.0),) for k, v in a.items()} for a in counts]
+    return counts
 
 
 def get_consensus_string(motifs, profile=None):
@@ -196,26 +199,80 @@ def median_string(dna, k):
     all_kmers = map(''.join, itertools.product('ACTG', repeat=k))
     return min(((kmer, dist(kmer, dna)) for kmer in all_kmers), key=operator.itemgetter(1))
 
+
 def score_kmer_on_profile(kmer, profile):
-    assert(len(kmer) == len(profile))
-    proba_kmer = list((p[k] for p,k in zip(profile, kmer)))
+    assert (len(kmer) == len(profile))
+    proba_kmer = list((p[k] for p, k in zip(profile, kmer)))
     return functools.reduce(operator.mul, proba_kmer, 1)
 
+
 def most_probable_kmer_from_profile(profile, text):
-    return max([(score_kmer_on_profile(kmer, profile), kmer) for kmer in get_all_kmers(text, len(profile), True)], key=operator.itemgetter(0))
+    return max([(score_kmer_on_profile(kmer, profile), kmer) for kmer in get_all_kmers(text, len(profile), True)],
+               key=operator.itemgetter(0))
+
 
 def greedy_motif_search(dna, k):
     best_motifs = [d[:k] for d in dna]
-    for kmer in get_all_kmers(dna[0], k):
+    best_score = score_motifs(best_motifs)
+    for kmer in get_all_kmers(dna[0], k, ordered=True):
         motifs = [kmer]
-        for i in range(1,len(dna)):
-            profile = get_profile(motifs)
+        for i in range(1, len(dna)):
+            profile = get_profile(motifs, pseudocounts=True)
             motif = most_probable_kmer_from_profile(profile, dna[i])
             motifs.append(motif[1])
-        if score_motifs(motifs) < score_motifs(best_motifs):
+        motifs_score = score_motifs(motifs)
+        if motifs_score < best_score:
             best_motifs = motifs
-    return best_motifs
+            best_score = motifs_score
+    return best_motifs, best_score
 
+
+def get_random_motif(text, k):
+    assert(len(text)-k+1 > 0)
+    start = randrange(len(text)-k+1)
+    return text[start:start+k]
+
+def randomized_motif_search(dna, k, times=2000):
+    best_motifs = [d[:k] for d in dna]
+    best_score = score_motifs(best_motifs)
+    for run in range(times):
+        motifs = [get_random_motif(d, k) for d in dna]
+        while True:
+            profile = get_profile(motifs, pseudocounts=True)
+            motifs = [most_probable_kmer_from_profile(profile, d)[1] for d in dna]
+            motifs_score = score_motifs(motifs)
+            if motifs_score < best_score:
+                best_motifs = motifs
+                best_score = score_motifs(best_motifs)
+            else:
+                break
+    return best_motifs, best_score
+
+def get_profile_randomly_generated_kmer(dna, profile):
+    kmer_probs = [(kmer, score_kmer_on_profile(kmer, profile)) for kmer in get_all_kmers(dna, len(profile))]
+    kmers, probs = zip(*kmer_probs)
+    probs_sum = sum(probs)
+    normalized_probs = [p/probs_sum for p in probs]
+    draw = choice(kmers, 1, p=normalized_probs)
+    return draw[0]
+
+
+def gibbs_sampler(dna, k, N = 100, times=1000):
+    best_motifs = [d[:k] for d in dna]
+    best_score = score_motifs(best_motifs)
+    dnas = len(dna)
+    for run in range(times):
+        motifs = [get_random_motif(d, k) for d in dna]
+        for _ in range(N):
+            exclude = randrange(dnas)
+            motifs_excluded = [motifs[i] for i in range(dnas) if i != exclude]
+            profile = get_profile(motifs_excluded, pseudocounts=True)
+            motifs[exclude] = get_profile_randomly_generated_kmer(dna[exclude], profile)
+            motifs_score = score_motifs(motifs)
+            if motifs_score < best_score:
+                best_motifs = motifs
+                best_score = score_motifs(best_motifs)
+    return best_motifs, best_score
 
 if __name__ == "__main__":
     ecoli = open('data\\E_coli.txt').readline()
