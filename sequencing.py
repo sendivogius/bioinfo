@@ -69,21 +69,22 @@ def eulerian_cycle(graph):
 
 
 def _get_terminal_nodes(graph):
-    out_degrees = {k: len(v) for k, v in graph.items()}
-    all_edges = [el for edges in graph.values() for el in edges]
-    in_degrees = {k: all_edges.count(k) for k in set(all_edges)}
-    degrees = {key: (out_degrees[key] - in_degrees.get(key, 0)) for key in out_degrees.keys()}
+    out_degrees = {k: _get_out_degree(graph, k) for k in graph}
+    in_degrees = {k: _get_in_degree(graph, k) for k in graph}
+    degrees = {key: (out_degrees[key] - in_degrees.get(key, 1)) for key in out_degrees.keys()}
     out_node = [k for k, v in degrees.items() if v == -1]
     if out_node:
         out_node = out_node[0]
     else:
-        out_node = next(iter(set(in_degrees.keys()) - set(out_degrees.keys())))
+        all_edges = {el for edges in graph.values() for el in edges}
+        out_node = next(iter(all_edges - set(out_degrees.keys())))
     in_node = [k for k, v in degrees.items() if v == 1]
     return in_node[0], out_node
 
 
 def eulerian_path(graph):
     start_node, end_node = _get_terminal_nodes(graph)
+    # add dummy edge
     graph[end_node] = graph.get(end_node, []) + [start_node]
     cycle = eulerian_cycle(graph)[1:]
     # breaking the cycle at added dummy edge
@@ -113,15 +114,15 @@ def paired_composition(dna, k, d):
 
 def genome_from_pair_sequence(seq, d):
     def match(gene, pattern):
-        return all(( g == '_' or g == p for (g,p) in zip(gene, pattern)))
+        return all((g == '_' or g == p for (g, p) in zip(gene, pattern)))
 
     k = len(seq[0][0])
-    genome = ['_']*(len(seq)+2*k+d-1)
+    genome = ['_'] * (len(seq) + 2 * k + d - 1)
     for i, (k1, k2) in enumerate(seq):
         k1_start = i
-        k2_start = k1_start+k+d
-        #check if k1 and k2 can be added to already constructed genome
-        if match(genome[k1_start:k1_start+k], k1) and match(genome[k2_start:k2_start+k], k2):
+        k2_start = k1_start + k + d
+        # check if k1 and k2 can be added to already constructed genome
+        if match(genome[k1_start:k1_start + k], k1) and match(genome[k2_start:k2_start + k], k2):
             genome[k1_start:k1_start + k] = k1
             genome[k2_start:k2_start + k] = k2
         else:
@@ -129,8 +130,59 @@ def genome_from_pair_sequence(seq, d):
 
     return ''.join(genome)
 
+
 def string_pair_reconstruction(kmers, d):
-    k = len(kmers[0][0])
     graph = debrujin_from_kmers(kmers)
     path = eulerian_path(graph)
-    return genome_from_pair_sequence(path, d+1)
+    genome = genome_from_pair_sequence(path, d + 1)
+    return genome
+    # for path in eulerian_path(graph):
+    #     reconstructed_path = genome_from_pair_sequence(path, d + 1)
+    #     if reconstructed_path:
+    #         return reconstructed_path
+    # return None
+
+
+def maximal_nonbranching_paths(graph):
+    def one_in_one_out(graph, node):
+        out_degree = _get_out_degree(graph, node)
+        in_degree = _get_in_degree(graph, node)
+        return (1 == in_degree == out_degree)
+
+    starting_nodes = (node for node in graph if not one_in_one_out(graph, node) and _get_out_degree(graph, node) > 0);
+    for node in starting_nodes:
+        # try each outgoing edges
+        for w in graph[node]:
+            non_branching_path = [node, w]
+            while one_in_one_out(graph, w):
+                w = graph[w][0]
+                non_branching_path.append(w)
+            yield non_branching_path
+
+    possible_cycle_nodes = (node for node in graph if one_in_one_out(graph, node))
+    for node in possible_cycle_nodes:
+        cycle = [node]
+        next_node = graph[node][0]
+        while one_in_one_out(graph, next_node):
+            cycle.append(next_node)
+            next_node = graph[next_node][0]
+            if cycle[0] == cycle[-1]:
+                yield cycle
+                for n in cycle:
+                    graph[n] = []
+                break
+
+
+def _get_in_degree(graph, node):
+    all_edges = [el for edges in graph.values() for el in edges]
+    return all_edges.count(node)
+
+
+def _get_out_degree(graph, node):
+    return len(graph.get(node, []))
+
+
+def get_contigs(kmers):
+    graph = debrujin_from_kmers(kmers)
+    mnbp = maximal_nonbranching_paths(graph)
+    return [genome_from_sequence(s) for s in mnbp]

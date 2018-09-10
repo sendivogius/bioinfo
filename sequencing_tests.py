@@ -42,15 +42,13 @@ class SequencingTests(unittest.TestCase):
         self.assertEqual(expected, sequencing.debrujin_from_dna(dna, k))
 
     def test_debrujin_graph_from_kmers(self):
-        kmers = [
-            'GAGG',
-            'CAGG',
-            'GGGG',
-            'GGGA',
-            'CAGG',
-            'AGGG',
-            'GGAG'
-        ]
+        kmers = ['GAGG',
+                 'CAGG',
+                 'GGGG',
+                 'GGGA',
+                 'CAGG',
+                 'AGGG',
+                 'GGAG']
         expected = {
             'AGG': ['GGG'],
             'CAG': ['AGG', 'AGG'],
@@ -202,7 +200,6 @@ class SequencingTests(unittest.TestCase):
         expected = 'AGCAGCTGCTGCA'
         self.assertEqual(expected, sequencing.genome_from_pair_sequence(seq, d))
 
-
     def test_genome_from_sequence_pair_invalid(self):
         seq = [('A', 'A'),
                ('G', 'G'),
@@ -216,7 +213,25 @@ class SequencingTests(unittest.TestCase):
                ('T', 'A')]
         d = 2
         expected = None
-        self.assertEqual(expected, sequencing.genome_from_pair_sequence(seq,d))
+        self.assertEqual(expected, sequencing.genome_from_pair_sequence(seq, d))
+
+    def test_get_contigs(self):
+        kmers = ['ATG', 'ATG', 'TGT', 'TGG', 'CAT', 'GGA', 'GAT', 'AGA']
+        expected = ['ATG', 'ATG', 'TGT', 'TGGA', 'CAT', 'GAT', 'AGA']
+        self.assertEqual(sorted(expected), sorted(sequencing.get_contigs(kmers)))
+
+    def test_maximal_nonbranching_paths(self):
+        graph = {1: [2],
+                 2: [3],
+                 3: [4, 5],
+                 6: [7],
+                 7: [6],
+                 10: [11],
+                 11: [12],
+                 12: [10]
+                 }
+        expected = [[1, 2, 3], [3, 4], [3, 5], [6, 7, 6], [10, 11, 12, 10]]
+        self.assertEqual(sorted(expected), sorted(list((sequencing.maximal_nonbranching_paths(graph)))))
 
 
 if __name__ == '__main__':
