@@ -9,8 +9,7 @@ def composition(dna, k):
 
 
 def genome_from_sequence(kmers_sequence):
-    k = len(kmers_sequence[0])
-    return ''.join([l[0] for l in kmers_sequence[:(len(kmers_sequence)-1)]])+kmers_sequence[-1]
+    return ''.join([l[0] for l in kmers_sequence[:(len(kmers_sequence) - 1)]]) + kmers_sequence[-1]
 
 
 def print_formatted(d):
@@ -25,15 +24,18 @@ def graph_from_sequence(kmers_sequence):
     v = {k: v for k, v in all_kmers.items() if v}
     return v
 
+
 def kmer_prefix(dnas):
     if type(dnas) is str:
         return dnas[:-1]
-    return tuple((d[:-1] for d in dnas))
+    return tuple(d[:-1] for d in dnas)
+
 
 def kmer_suffix(dnas):
     if type(dnas) is str:
         return dnas[1:]
     return tuple((d[1:] for d in dnas))
+
 
 def debrujin_from_kmers(kmers):
     graph = dict()
@@ -69,7 +71,7 @@ def eulerian_cycle(graph):
 def _get_terminal_nodes(graph):
     out_degrees = {k: len(v) for k, v in graph.items()}
     all_edges = [el for edges in graph.values() for el in edges]
-    in_degrees = { k: all_edges.count(k) for k in set(all_edges)}
+    in_degrees = {k: all_edges.count(k) for k in set(all_edges)}
     degrees = {key: (out_degrees[key] - in_degrees.get(key, 0)) for key in out_degrees.keys()}
     out_node = [k for k, v in degrees.items() if v == -1]
     if out_node:
@@ -84,8 +86,8 @@ def eulerian_path(graph):
     start_node, end_node = _get_terminal_nodes(graph)
     graph[end_node] = graph.get(end_node, []) + [start_node]
     cycle = eulerian_cycle(graph)[1:]
-    #breaking the cycle at added dummy edge
-    break_position = next(i for i in range(len(cycle)-1) if cycle[i:i+2] == [end_node, start_node])+1
+    # breaking the cycle at added dummy edge
+    break_position = next(i for i in range(len(cycle) - 1) if cycle[i:i + 2] == [end_node, start_node]) + 1
     path = cycle[break_position:] + cycle[:break_position]
     # print_list_as_path(path)
     return path
@@ -101,9 +103,34 @@ def universal_string(k):
     kmers = list(''.join(t) for t in itertools.product('01', repeat=k))
     graph = debrujin_from_kmers(kmers)
     path = eulerian_cycle(graph)
-    return genome_from_sequence(path)[:-k+1]
+    return genome_from_sequence(path)[:-k + 1]
+
 
 def paired_composition(dna, k, d):
-    pairs = [(dna[i:i+k], dna[i+k+d:i+2*k+d]) for i in range(len(dna)-2*k-d+1)]
+    pairs = [(dna[i:i + k], dna[i + k + d:i + 2 * k + d]) for i in range(len(dna) - 2 * k - d + 1)]
     return sorted(pairs)
 
+
+def genome_from_pair_sequence(seq, d):
+    def match(gene, pattern):
+        return all(( g == '_' or g == p for (g,p) in zip(gene, pattern)))
+
+    k = len(seq[0][0])
+    genome = ['_']*(len(seq)+2*k+d-1)
+    for i, (k1, k2) in enumerate(seq):
+        k1_start = i
+        k2_start = k1_start+k+d
+        #check if k1 and k2 can be added to already constructed genome
+        if match(genome[k1_start:k1_start+k], k1) and match(genome[k2_start:k2_start+k], k2):
+            genome[k1_start:k1_start + k] = k1
+            genome[k2_start:k2_start + k] = k2
+        else:
+            return None
+
+    return ''.join(genome)
+
+def string_pair_reconstruction(kmers, d):
+    k = len(kmers[0][0])
+    graph = debrujin_from_kmers(kmers)
+    path = eulerian_path(graph)
+    return genome_from_pair_sequence(path, d+1)

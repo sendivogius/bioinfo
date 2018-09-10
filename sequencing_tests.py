@@ -151,6 +151,73 @@ class SequencingTests(unittest.TestCase):
                     }
         self.assertEqual(expected, sequencing.debrujin_from_kmers(kmers))
 
+    def test_string_reconstruction_pair(self):
+        kmers = [('GAGA', 'TTGA'),
+                 ('TCGT', 'GATG'),
+                 ('CGTG', 'ATGT'),
+                 ('TGGT', 'TGAG'),
+                 ('GTGA', 'TGTT'),
+                 ('GTGG', 'GTGA'),
+                 ('TGAG', 'GTTG'),
+                 ('GGTC', 'GAGA'),
+                 ('GTCG', 'AGAT')]
+        d = 2
+        expected = 'GTGGTCGTGAGATGTTGA'
+        self.assertEqual(expected, sequencing.string_pair_reconstruction(kmers, d))
+
+    def test_string_reconstruction_pair_multiple_paths(self):
+        kmers = [('AG', 'AG'), ('GC', 'GC'), ('CA', 'CT'), ('AG', 'TG'), ('GC', 'GC'), ('CT', 'CT'), ('TG', 'TG'),
+                 ('GC', 'GC'), ('CT', 'CA')]
+        d = 1
+        expected = 'AGCAGCTGCTGCA'
+        self.assertEqual(expected, sequencing.string_pair_reconstruction(kmers, d))
+
+    def test_genome_from_sequence_pair(self):
+        seq = [('GTG', 'GTG'),
+               ('TGG', 'TGA'),
+               ('GGT', 'GAG'),
+               ('GTC', 'AGA'),
+               ('TCG', 'GAT'),
+               ('CGT', 'ATG'),
+               ('GTG', 'TGT'),
+               ('TGA', 'GTT'),
+               ('GAG', 'TTG'),
+               ('AGA', 'TGA')]
+        d = 3
+        expected = 'GTGGTCGTGAGATGTTGA'
+        self.assertEqual(expected, sequencing.genome_from_pair_sequence(seq, d))
+
+    def test_genome_from_sequence_pair2(self):
+        seq = [('A', 'A'),
+               ('G', 'G'),
+               ('C', 'C'),
+               ('A', 'T'),
+               ('G', 'G'),
+               ('C', 'C'),
+               ('T', 'T'),
+               ('G', 'G'),
+               ('C', 'C'),
+               ('T', 'A')]
+        d = 2
+        expected = 'AGCAGCTGCTGCA'
+        self.assertEqual(expected, sequencing.genome_from_pair_sequence(seq, d))
+
+
+    def test_genome_from_sequence_pair_invalid(self):
+        seq = [('A', 'A'),
+               ('G', 'G'),
+               ('C', 'C'),
+               ('T', 'T'),
+               ('G', 'G'),
+               ('C', 'C'),
+               ('A', 'T'),
+               ('G', 'G'),
+               ('C', 'C'),
+               ('T', 'A')]
+        d = 2
+        expected = None
+        self.assertEqual(expected, sequencing.genome_from_pair_sequence(seq,d))
+
 
 if __name__ == '__main__':
     unittest.main()
