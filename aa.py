@@ -2,6 +2,7 @@ import functools
 import itertools
 
 import math
+from operator import itemgetter
 
 import motifs
 
@@ -139,7 +140,7 @@ def theoretical_spectrum(aa_seq):
     return sorted(peptides_mass)
 
 
-def parent_mass(spectrum):
+def get_parent_mass(spectrum):
     return max(spectrum)
 
 
@@ -185,11 +186,12 @@ def is_consistent(test_spec, target_spec):
 
 
 def cyclopeptide_sequencing_generator(spectrum):
+    parent_mass = get_parent_mass(spectrum)
     peptides = {''}
     while peptides:
         matching_pep = set()
         for pep in expand_peptides(peptides):
-            if get_peptide_mass(pep) == parent_mass(spectrum) and theoretical_spectrum(pep) == spectrum:
+            if get_peptide_mass(pep) == parent_mass and theoretical_spectrum(pep) == spectrum:
                 yield pep
             if is_consistent(theoretical_spectrum(pep), spectrum):
                 matching_pep.add(pep)
@@ -206,6 +208,45 @@ def cyclopeptide_sequencing(spectrum, unique=False):
         return peptides
     return {mass_string(pep) for pep in peptides}
 
+
+def _get_n_for_ties(elements, N):
+    len_elem = len(elements)
+    if len_elem <= N:
+        return len_elem
+    new_n = N
+    while new_n < len_elem and elements[new_n] == elements[N]:
+        new_n += 1
+    return new_n
+
+
+def trim_leaderboard(leaderboard, N, spectrum):
+    scores_tuples = sorted([(score_peptide(spectrum, l), l) for l in leaderboard], reverse=True)
+    sorted_scores = list(map(itemgetter(0), scores_tuples))
+    new_n = _get_n_for_ties(sorted_scores, N)
+    return set(s[1] for s in scores_tuples[:new_n])
+
+
+def leaderboard_cyclopeptide_sequencing(spectrum, N=50, unique=False):
+    parent_mass = get_parent_mass(spectrum)
+    leaderboard = {''}
+    leader_peptide = ''
+    leader_score = 0
+    while leaderboard:
+        new_board = set()
+        for pep in expand_peptides(leaderboard):
+            pep_mass = get_peptide_mass(pep)
+            if pep_mass == parent_mass:
+                if score_peptide(spectrum, pep) > leader_score:
+                    leader_peptide = pep
+                    leader_score = score_peptide(spectrum, leader_peptide)
+            elif pep_mass < parent_mass:
+                new_board.add(pep)
+        leaderboard = trim_leaderboard(new_board, N, spectrum)
+
+    print(leader_peptide, score_peptide(spectrum, leader_peptide))
+    if not unique:
+        return leader_peptide
+    return mass_string(leader_peptide)
 
 
 def approx_pept_mass(start=100, stop=1000, step=2):
@@ -236,5 +277,25 @@ def approx_pept_mass(start=100, stop=1000, step=2):
     plt.show()
 
 
+def score_peptide(spectrum, peptide):
+    # print(peptide)
+    spectrum = spectrum[:]
+    peptide_spectrum = theoretical_spectrum(peptide)
+    score = 0
+    for mass in peptide_spectrum:
+        if mass in spectrum:
+            score += 1
+            spectrum.remove(mass)
+    return score
+
+
 if __name__ == "__main__":
-    approx_pept_mass(200, 1500, 10)
+    # approx_pept_mass(200, 1500, 10)
+    spec = [0, 97, 99, 114, 128, 147, 147, 163, 186, 227, 241, 242, 244, 260, 261, 262, 283, 291, 333, 340, 357, 385,
+            389, 390, 390, 405, 430, 430, 447, 485, 487, 503, 504, 518, 543, 544, 552, 575, 577, 584, 632, 650, 651,
+            671, 672, 690, 691, 738, 745, 747, 770, 778, 779, 804, 818, 819, 820, 835, 837, 875, 892, 917, 932, 932,
+            933, 934, 965, 982, 989, 1030, 1039, 1060, 1061, 1062, 1078, 1080, 1081, 1095, 1136, 1159, 1175, 1175, 1194,
+            1194, 1208, 1209, 1223, 1225, 1322]
+    N = 1
+    best = leaderboard_cyclopeptide_sequencing(spec, N, True)
+    print(best)
