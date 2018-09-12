@@ -2,6 +2,7 @@ import functools
 import itertools
 
 import math
+from collections import Counter
 from operator import itemgetter
 
 import motifs
@@ -137,7 +138,7 @@ def theoretical_spectrum(aa_seq):
     da = aa_seq * 2
     peptides = [da[start:start + k] for k in range(1, l) for start in range(l)] + ['', aa_seq]
     peptides_mass = [get_peptide_mass(pep) for pep in peptides]
-    return sorted(peptides_mass)
+    return Counter(peptides_mass)
 
 
 def get_parent_mass(spectrum):
@@ -214,7 +215,7 @@ def _get_n_for_ties(elements, N):
     if len_elem <= N:
         return len_elem
     new_n = N
-    while new_n < len_elem and elements[new_n] == elements[N]:
+    while new_n < len_elem and elements[new_n] == elements[N-1]:
         new_n += 1
     return new_n
 
@@ -279,13 +280,9 @@ def approx_pept_mass(start=100, stop=1000, step=2):
 
 def score_peptide(spectrum, peptide):
     # print(peptide)
-    spectrum = spectrum[:]
     peptide_spectrum = theoretical_spectrum(peptide)
-    score = 0
-    for mass in peptide_spectrum:
-        if mass in spectrum:
-            score += 1
-            spectrum.remove(mass)
+    common_masses = spectrum.keys() & peptide_spectrum.keys()
+    score = sum(min(spectrum[k], peptide_spectrum[k]) for k in common_masses)
     return score
 
 
