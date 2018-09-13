@@ -242,29 +242,30 @@ def trim_leaderboard(leaderboard, N, spectrum):
     return set(s[1] for s in scores_tuples[:new_n]), sorted_scores[0], sorted_scores[new_n - 1]
 
 
-def leaderboard_cyclopeptide_sequencing(spectrum, N=50, unique=False):
+def leaderboard_cyclopeptide_sequencing(spectrum, N=50, integers=False):
     parent_mass = get_parent_mass(spectrum)
-    leaderboard = {''}
-    leader_peptides = ''
+    leaderboard = {()}
+    leader_peptides = ()
     leader_score = 0
     while leaderboard:
         new_board = set()
-        for pep in expand_peptides(leaderboard):
-            pep_mass = get_peptide_mass(pep)
-            if pep_mass == parent_mass:
-                score = score_peptide(spectrum, pep, cyclic=True)
+        for peptide in expand_peptides(leaderboard):
+            peptide_mass = get_peptide_mass(peptide)
+            if peptide_mass == parent_mass:
+                score = score_peptide(spectrum, peptide, cyclic=True)
                 if score > leader_score:
-                    leader_peptides = {pep}
+                    leader_peptides = {peptide}
                     leader_score = score
                 elif score == leader_score:
-                    leader_peptides.add(pep)
-            if pep_mass <= parent_mass:
-                new_board.add(pep)
+                    leader_peptides.add(peptide)
+            if peptide_mass <= parent_mass:
+                new_board.add(peptide)
         leaderboard, _, _ = trim_leaderboard(new_board, N, spectrum)
 
-    if not unique:
+    if integers:
         return leader_peptides, leader_score
-    return {mass_string(pep) for pep in leader_peptides}, leader_score
+    a = itertools.chain.from_iterable(masses_to_peptide(pep) for pep in leader_peptides)
+    return set(a), leader_score
 
 
 def approx_pept_mass(start=100, stop=1000, step=2):
