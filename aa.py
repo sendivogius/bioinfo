@@ -156,8 +156,8 @@ def get_parent_mass(spectrum):
     return max(spectrum)
 
 
-def expand_peptides(mass_tuples):
-    return {p + (m,) for p in mass_tuples for m in aminoacids_masses}
+def expand_peptides(mass_tuples, masses_to_use=aminoacids_masses):
+    return {p + (m,) for p in mass_tuples for m in masses_to_use}
 
 
 def get_all_combinations_iterative(elements, target_value):
@@ -202,7 +202,7 @@ def cyclopeptide_sequencing_generator(spectrum):
     peptides = {()}
     while peptides:
         matching_pep = set()
-        for pep in expand_peptides(peptides):
+        for pep in expand_peptides(peptides, aminoacids_masses):
             if get_peptide_mass(pep) == parent_mass and theoretical_spectrum(pep) == spectrum:
                 yield pep
             if is_consistent(theoretical_spectrum(pep), spectrum):
@@ -211,7 +211,11 @@ def cyclopeptide_sequencing_generator(spectrum):
 
 
 def mass_string(peptide):
-    return '-'.join([str(aminoacids_mass_map[aa]) for aa in peptide])
+    if type(peptide) == str:
+        return '-'.join([str(aminoacids_mass_map[aa]) for aa in peptide])
+    if type(peptide) == tuple:
+        return '-'.join([str(aa) for aa in peptide])
+    return ' '.join(mass_string(p) for p in peptide)
 
 
 def cyclopeptide_sequencing(spectrum, integers=False):
@@ -235,20 +239,25 @@ def _get_n_for_ties(elements, N):
 def trim_leaderboard(leaderboard, N, spectrum):
     if not leaderboard:
         return set(), 0, 0
-    cyclic_score = N == 1  # if N == 1 we ge best which should be scored diffrently
     scores_tuples = sorted([(score_peptide(spectrum, l, cyclic=False), l) for l in leaderboard], reverse=True)
     sorted_scores = list(map(itemgetter(0), scores_tuples))
     new_n = _get_n_for_ties(sorted_scores, N)
     return set(s[1] for s in scores_tuples[:new_n]), sorted_scores[0], sorted_scores[new_n - 1]
 
 
-def leaderboard_cyclopeptide_sequencing(spectrum, N=50, integers=False):
+def leaderboard_cyclopeptide_sequencing(spectrum, N=50, integers=False, convolute=False):
     parent_mass = get_parent_mass(spectrum)
     leaderboard = {()}
     leader_score = 0
+    if convolute:
+        convolution_masses = Counter(spectral_convolution(spectrum)).most_common()
+        threshold_occurrence = convolution_masses[convolute][1]
+        masses = [mass_occ[0] for mass_occ in convolution_masses if mass_occ[1] >= threshold_occurrence]
+    else:
+        masses = aminoacids_masses
     while leaderboard:
         new_board = set()
-        for peptide in expand_peptides(leaderboard):
+        for peptide in expand_peptides(leaderboard, masses):
             peptide_mass = get_peptide_mass(peptide)
             if peptide_mass == parent_mass:
                 score = score_peptide(spectrum, peptide, cyclic=True)
@@ -306,10 +315,18 @@ def score_peptide(spectrum, peptide, cyclic=True):
     # print(peptide)
     peptide_spectrum = theoretical_spectrum(peptide, cyclic)
     common_masses = spectrum.keys() & peptide_spectrum.keys()
-    a = {k:min(spectrum[k], peptide_spectrum[k]) for k in common_masses}
-    s = sum(a.values())
     score = sum(min(spectrum[k], peptide_spectrum[k]) for k in common_masses)
     return score
+
+
+def _spectral_convolution_generator(spectrum):
+    massess = sorted(spectrum.keys())
+    for m1, m2 in itertools.combinations(massess, 2):
+        yield [m2 - m1] * spectrum[m1] * spectrum[m2]
+
+
+def spectral_convolution(spectrum, min_mass=57, max_mass=200):
+    return list(conv for convolutions in _spectral_convolution_generator(spectrum) for conv in convolutions if min_mass <= conv <= max_mass)
 
 
 if __name__ == "__main__":
@@ -318,13 +335,18 @@ if __name__ == "__main__":
     import pprint
 
     spec_10 = Counter(
-        [0, 97, 99, 114, 128, 147, 147, 163, 186, 227, 241, 242, 244, 260, 261, 262, 283, 291, 333, 340, 357, 385,
-         389, 390, 390, 405, 430, 430, 447, 485, 487, 503, 504, 518, 543, 544, 552, 575, 577, 584, 632, 650, 651,
-         671, 672, 690, 691, 738, 745, 747, 770, 778, 779, 804, 818, 819, 820, 835, 837, 875, 892, 917, 932, 932,
-         933, 934, 965, 982, 989, 1030, 1039, 1060, 1061, 1062, 1078, 1080, 1081, 1095, 1136, 1159, 1175, 1175, 1194,
-         1194, 1208, 1209, 1223, 1225, 1322])
+        [0, 97, 99, 114, 128, 147, 147, 163, 186, 227, 241, 242, 244, 260, 261, 262, 283, 291, 333, 340, 357, 385, 389,
+         390, 390, 405, 430, 430, 447, 485, 487, 503, 504, 518, 543, 544, 552, 575, 577, 584, 632, 650, 651, 671, 672,
+         690, 691, 738, 745, 747, 770, 778, 779, 804, 818, 819, 820, 835, 837, 875, 892, 917, 932, 932, 933, 934, 965,
+         982, 989, 1030, 1039, 1060, 1061, 1062, 1078, 1080, 1081, 1095, 1136, 1159, 1175, 1175, 1194, 1194, 1208,
+         1209, 1223, 1225, 1322])
+
     spec_25 = Counter(
-        [0,97,99,113,114,115,128,128,147,147,163,186,227,241,242,244,244,256,260,261,262,283,291,309,330,333,340,347,385,388,389,390,390,405,435,447,485,487,503,504,518,544,552,575,577,584,599,608,631,632,650,651,653,672,690,691,717,738,745,770,779,804,818,819,827,835,837,875,892,892,917,932,932,933,934,965,982,989,1039,1060,1062,1078,1080,1081,1095,1136,1159,1175,1175,1194,1194,1208,1209,1223,1322])
+        [0, 97, 99, 113, 114, 115, 128, 128, 147, 147, 163, 186, 227, 241, 242, 244, 244, 256, 260, 261, 262, 283, 291,
+         309, 330, 333, 340, 347, 385, 388, 389, 390, 390, 405, 435, 447, 485, 487, 503, 504, 518, 544, 552, 575, 577,
+         584, 599, 608, 631, 632, 650, 651, 653, 672, 690, 691, 717, 738, 745, 770, 779, 804, 818, 819, 827, 835, 837,
+         875, 892, 892, 917, 932, 932, 933, 934, 965, 982, 989, 1039, 1060, 1062, 1078, 1080, 1081, 1095, 1136, 1159,
+         1175, 1175, 1194, 1194, 1208, 1209, 1223, 1322])
     N = 1000
 
     # spec_test= Counter([0,97,99,113,114,115,128,128,147,147,163,186,227,241,242,244,244,256,260,261,262,283,291,309,330,333,340,347,385,388,389,390,390,405,435,447,485,487,503,504,518,544,552,575,577,584,599,608,631,632,650,651,653,672,690,691,717,738,745,770,779,804,818,819,827,835,837,875,892,892,917,932,932,933,934,965,982,989,1039,1060,1062,1078,1080,1081,1095,1136,1159,1175,1175,1194,1194,1208,1209,1223,1322])
@@ -332,8 +354,8 @@ if __name__ == "__main__":
     # pprint.pprint(best_test)
     #
     # exit(10)
-    # best_10 = leaderboard_cyclopeptide_sequencing(spec_10, N, False)
-    # pprint.pprint(best_10)
-    best_25 = leaderboard_cyclopeptide_sequencing(spec_25, N, True)
-    pprint.pprint(best_25)
-    print(len(best_25[0]))
+    best_10 = leaderboard_cyclopeptide_sequencing(spec_10, N, True)
+    print(mass_string(best_10[0]))
+    # best_25 = leaderboard_cyclopeptide_sequencing(spec_25, N, True)
+    # pprint.pprint(best_25)
+    # print(len(best_25[0]))

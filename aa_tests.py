@@ -201,9 +201,36 @@ class AaTests(unittest.TestCase):
         self.assertEqual(4, aa._get_n_for_ties(elems, n, ))
 
     def test_masses_to_peptide(self):
-        spectrum = (97, 113, 147, 128)
+        peptide = (97, 113, 147, 128)
         expected = {'PIFK', 'PLFK', 'PIFQ', 'PLFQ'}
-        self.assertEqual(expected, aa.masses_to_peptide(spectrum))
+        self.assertEqual(expected, aa.masses_to_peptide(peptide))
+
+    def test_spectral_convolution(self):
+        spectrum = Counter([0, 137, 186, 323])
+        expected = [137, 137, 186, 186, 323, 49]
+        self.assertEqual(sorted(expected), sorted(aa.spectral_convolution(spectrum, 1, 500)))
+
+    def test_spectral_convolution_filter(self):
+        spectrum = Counter([0, 137, 186, 323])
+        expected = [137, 137, 186, 186]
+        self.assertEqual(sorted(expected), sorted(aa.spectral_convolution(spectrum, 57, 200)))
+
+    def test_spectral_convolution_multiple(self):
+        spectrum = Counter([0, 1, 1, 5, 5, 5])
+        expected = [1, 1, 4, 4, 4, 4, 4, 4, 5, 5, 5]
+        self.assertEqual(sorted(expected), sorted(aa.spectral_convolution(spectrum, 1, 11111111)))
+
+    def test_leadeboard_cyclopeptide_sequencing_spectrum(self):
+        N = 355
+        convolute_m = 17
+        spectrum = Counter(
+            # [57, 57, 71, 99, 129, 137, 170, 186, 194, 208, 228, 265, 285, 299, 307, 323, 356, 364, 394, 422, 493])
+            [444,1212,128,71,929,628,1299,1068,1171,101,128,1295,1284,114,299,200,1198,853,200,841,226,1070,103,283,328,826,113,354,931,1111,669,653,998,287,1172,400,344,699,1228,1012,1044,401,600,99,1115,442,770,859,973,1182,1327,954,827,812,529,57,586,528,0,1157,996,1101,330,412,1297,1054,571,458,642,1181,642,941,1099,643,883,798,341,1109,301,869,570,713,756,1398,1097,487,828,97,170,540,1057,425,1053,458,457,1295,986,1341,572,217,1214,756,499,103,858,1198,658,956,1156,1270,685,113,997,740,1285,1285,714,186,786,227,899,113,198,289,216,1270,557,684,354,870,940,1285,242,467,241,469,911,755,386,545,1200,745,586,515,699,1301,1157,345,539,241,729,402,812,940,297,1044,184,612]
+        )
+        self.assertEqual(({'AEIF', 'AELF', 'AFIE', 'AFLE', 'EAFI', 'EAFL', 'EIFA', 'ELFA', 'FAEI', 'FAEL', 'FIEA',
+                           'FLEA', 'IEAF', 'IFAE', 'LEAF', 'LFAE'},
+                          13),
+                         aa.leaderboard_cyclopeptide_sequencing(spectrum, N, integers=True, convolute=convolute_m))
 
 
 if __name__ == '__main__':
