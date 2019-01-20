@@ -1,20 +1,35 @@
-import collections
 import functools
-from collections import defaultdict
-import operator
-from math import log2
-from numpy.random import choice
-
 import itertools
+import operator
+import collections
+from math import log2
 from random import randrange
 
+from numpy.random import choice
 
-def reverse_strand(text):
-    mappings = {'C': 'G', 'G': 'C', 'A': 'T', 'T': 'A'}
-    return ''.join([mappings[nn] for nn in text[::-1]])
+from utils import is_dna
+
+_rev_mapping = {'C': 'G', 'G': 'C', 'A': 'T', 'T': 'A'}
+
+
+def reverse_complement_strand(dna):
+    """Compute reverse complement strand for given dna (1C in BA_AALA)
+    :param dna: ACTG string
+    :return: reversed complement strand
+    """
+    assert (is_dna(dna))
+    return ''.join(_rev_mapping[nn] for nn in dna[::-1])
 
 
 def get_all_kmers(pattern, k, ordered=False):
+    """Returns all kmers of pattern.
+    Depending on `ordered` returns all kmers as they appear in `pattern` or set of unique kmers
+
+    :param pattern: string to look for kmers
+    :param k: length of kmer
+    :param ordered: boolean flag
+    :return: list or se of kmers, depending o `ordered` parameter
+    """
     ordered_kmers = [pattern[i:i + k] for i in range(len(pattern) - k + 1)]
     if ordered:
         return ordered_kmers
@@ -22,29 +37,48 @@ def get_all_kmers(pattern, k, ordered=False):
 
 
 def find_occurrences(text, pattern, k=0):
-    """get indexes of (possibly overlapping) occurrences of pattern in text"""
-    return [i for i in range(len(text) - len(pattern) + 1) if hamming(text[i:i + len(pattern)], pattern) <= k]
+    """Get indexes of (possibly overlapping) occurrences of `pattern` in `text` with up to `k` mismatches
+    1D (k=0) and 1H (k>0) in BA_AALA
+    :param text: string to search in
+    :param pattern: string to look for
+    :param k: int, maximum number of mismatches (aka Hamming distance)
+    :return: list of indices where pattern appears in text
+    """
+    idx_of_last_pattern = len(text) - len(pattern)
+    return [i for i in range(idx_of_last_pattern + 1) if hamming(text[i:i + len(pattern)], pattern) <= k]
 
 
 def count_occurrences(text, pattern, k=0):
-    """count number of (possibly overlapping) occurrences of pattern in text"""
+    """Count number of (possibly overlapping) occurrences of pattern in text (1A in BA_AALA)
+    :param text: string to search in
+    :param pattern: string to look for
+    :param k: int, maximum number of mismatches (aka Hamming distance)
+    :return: int, number of times `pattern` appears in `text`
+    """
     return len(find_occurrences(text, pattern, k))
 
 
-def frequent_kmers(text, k, d=0, reverse=False):
+def frequent_kmers(genome, k, d=0, reverse=False):
+    """Get most frequent kmers in string with up to `d` mismatches and reverse complement
+    Problem 1B (d=0, reverse=False), 1I (d>1, reverse=True) and 1J (revere=True) in BA_AALA
+
+    :param genome: ACTG string
+    :param k: length of kmer
+    :param d: number of allowed mismatches
+    :param reverse: flag whether include revese complement strand
+    :return: tuple ({kmer1,kmer2,..), num_of_occurences
     """
-    Get most frequent kmers in string with up to d mismatches
-    Returns ( {kmer1, kmer2}, num_of_occurences )
-    """
+    assert (is_dna(genome))
+
     max_kmers = []
     max_kmers_cnt = 0
 
-    reversed = reverse_strand(text) if reverse else ''
+    reversed = reverse_complement_strand(genome) if reverse else ''
 
-    kmers = get_all_kmers(text, k)
-    kmers_neghbourhood = {p for kmer in kmers for p in get_neighbourhs(kmer, d)}
-    for i, kmer in enumerate(kmers_neghbourhood):
-        kmer_counts = count_occurrences(text, kmer, d) + count_occurrences(reversed, kmer, d)
+    kmers = get_all_kmers(genome, k)
+    kmers_neighbourhood = {p for kmer in kmers for p in get_neighbours(kmer, d)}
+    for i, kmer in enumerate(kmers_neighbourhood):
+        kmer_counts = count_occurrences(genome, kmer, d) + count_occurrences(reversed, kmer, d)
         if kmer_counts == max_kmers_cnt:
             max_kmers.append(kmer)
         elif kmer_counts > max_kmers_cnt:
@@ -55,60 +89,90 @@ def frequent_kmers(text, k, d=0, reverse=False):
     return set(max_kmers), max_kmers_cnt
 
 
-def _get_neighbourhs(pattern):
+def _get_neighbours(kmer):
+    """Get immediate neighbours of kmer
+
+    :param kmer: ACTG string
+    :return: set of neighbours kmers
+    """
+    assert (is_dna(kmer))
     bases = 'ACTG'
     result = set()
-    for i in range(len(pattern)):
+    for i in range(len(kmer)):
         for base in bases:
-            result.add(pattern[:i] + base + pattern[(i + 1):])
+            result.add(kmer[:i] + base + kmer[(i + 1):])
     return result
 
 
-def get_neighbourhs(pattern, d):
-    result = set([pattern])
-    for i in range(d):
+def get_neighbours(kmer, max_d):
+    """Generate all kmers of distance at most max_d to kmer (1N in BA_AALA)
+
+    :param kmer: ACTG string
+    :param max_d: maximum Hamming distance
+    :return: set of neighbours dnas
+    """
+    assert (is_dna(kmer))
+    result = set([kmer])
+    for i in range(max_d):
         addded = set()
-        for pattern in result:
-            addded |= _get_neighbourhs(pattern)
+        for kmer in result:
+            addded |= _get_neighbours(kmer)
         result |= addded
     return result
 
 
-def get_keys_(dict_, t):
+def _get_keys(dict_, t):
+    """Gets keys for items having value at least t"""
     return {k for (k, v) in dict_.items() if v >= t}
 
 
-def find_clumps(text, k, L, t):
-    """
-    Find all distinct k-mers forming (L, t)-clumps in Genome.
-
-    :param text: DNA
-    :param k: length of kmers
+def find_clumps(genome, k, L, t):
+    """Find all distinct k-mers forming (L, t)-clumps in genome (Problem 1E in BA_AALA)
+    (L, t)-clump is an interval of length L in which k-mer appears at least t times
+    :param genome: ACTG string
+    :param k: length of kmer
     :param L: ori length
-    :param t: minimum number of occurences of kmer in L
-    :return:
+    :param t: minimum number of occurrences of kmer in L
+    :return: set of distinct kmers forming (L-T)-clumps
     """
-    counts = defaultdict(int)
-    for k_start in range(L - k + 1):
-        counts[text[k_start:k_start + k]] += 1
-    kmers = get_keys_(counts, t)
+    assert (is_dna(genome))
+    counts = collections.defaultdict(int)
 
-    for L_start in range(1, len(text) - L + 1):
-        counts[text[L_start - 1:L_start + k - 1]] -= 1
-        new_kmer = text[L_start + L - k:L_start + L]
+    # compute counts of kmers in first L-length part of genome
+    for k_start in range(L - k + 1):
+        counts[genome[k_start:k_start + k]] += 1
+    kmers = _get_keys(counts, t)
+
+    # slide L-length window and update counts
+    # remove previous leftmost kmer and add new kmer being rightmost in current window
+    for L_start in range(1, len(genome) - L + 1):
+        counts[genome[L_start - 1:L_start + k - 1]] -= 1
+        new_kmer = genome[L_start + L - k:L_start + L]
         counts[new_kmer] += 1
         if counts[new_kmer] >= t:
             kmers.add(new_kmer)
-
     return kmers
 
 
-def pattern_to_number(pattern):
+def pattern_to_number(dna):
+    """Computes number corresponding to dna pattern (1L in BA_AALA)
+
+    :param dna: ACTG string
+    :return: int
+    """
+    assert (is_dna(dna))
     idx = 'ACGT'
-    return sum(idx.index(dna_base) * 4 ** i for i, dna_base in enumerate(pattern[::-1]))
+    return sum(idx.index(dna_base) * 4 ** i for i, dna_base in enumerate(dna[::-1]))
 
 
 def number_to_pattern(number, length):
+    """Computes dna pattern for given number (1K in BA_AALA)
+
+    :param number:
+    :param length: length of returned kmer
+    :return: kmer for which pattern_to_number returns `number`
+    """
+
     idx = 'ACGT'
     pattern = ''
     while number > 0:
@@ -117,45 +181,54 @@ def number_to_pattern(number, length):
     return idx[0] * (length - len(pattern)) + pattern[::-1]
 
 
-def compute_frequencies(text, k):
-    freq_array = [0] * 4 ** k
-    for start in range(len(text) - k + 1):
-        num = pattern_to_number(text[start:start + k])
-        freq_array[num] += 1
-    return freq_array
-
-
-def get_skew(dna, down='C', up='G'):
-    skew = [0] * (len(dna) + 1)
-    for i, b in enumerate(dna, 1):
-        if b == down:
+def get_skew(genome):
+    """Computes skew of genome
+    Skew is defined as running total of differences between G and C
+    :param genome: ACTG string
+    :return: list of same length as `genome` with skew values
+    """
+    assert (is_dna(genome))
+    skew = [0] * (len(genome) + 1)
+    for i, base in enumerate(genome, 1):
+        if base == 'C':
             skew[i] = skew[i - 1] - 1
-        elif b == up:
+        elif base == 'G':
             skew[i] = skew[i - 1] + 1
         else:
             skew[i] = skew[i - 1]
     return skew
 
 
-def get_min_skew_posiion(dna, down='C', up='G'):
-    skew = get_skew(dna, down, up)
+def get_min_skew_position(genome):
+    """Find a position in a genome where the skew attain a minumum (1F in BA_AALA)
+
+    :param genome: ACTG string
+    :return: list of all integers minimizing skew
+    """
+    assert (is_dna(genome))
+    skew = get_skew(genome)
     min_skew = min(skew)
     return [pos for (pos, sk) in enumerate(skew) if sk == min_skew]
 
 
-def plot_skew(dna, down='C', up='G'):
-    skew = get_skew(dna, down, up)
+def plot_skew(genome):
+    assert (is_dna(genome))
     import matplotlib.pyplot as plt
+    skew = get_skew(genome)
     plt.plot(skew, '-')
-    plt.title('Skew plot {}-{}'.format(up, down))
+    plt.title('Skew plot')
     plt.ylabel('skew')
     plt.xlabel('position')
     plt.show()
 
 
-def hamming(dna1, dna2):
-    assert (len(dna1) == len(dna2))
-    return sum(a != b for a, b in zip(dna1, dna2))
+def hamming(text1, text2):
+    """Calculate Hamming distance between two strings of equal length (1G in BA_AALA)
+
+    :return: The Hamming distance between input strings
+    """
+    assert (len(text1) == len(text2))
+    return sum(a != b for a, b in zip(text1, text2))
 
 
 def get_profile(motifs, relative=True, pseudocounts=False):
@@ -228,9 +301,10 @@ def greedy_motif_search(dna, k):
 
 
 def get_random_motif(text, k):
-    assert(len(text)-k+1 > 0)
-    start = randrange(len(text)-k+1)
-    return text[start:start+k]
+    assert (len(text) - k + 1 > 0)
+    start = randrange(len(text) - k + 1)
+    return text[start:start + k]
+
 
 def randomized_motif_search(dna, k, times=2000):
     best_motifs = [d[:k] for d in dna]
@@ -248,16 +322,17 @@ def randomized_motif_search(dna, k, times=2000):
                 break
     return best_motifs, best_score
 
+
 def get_profile_randomly_generated_kmer(dna, profile):
     kmer_probs = [(kmer, score_kmer_on_profile(kmer, profile)) for kmer in get_all_kmers(dna, len(profile))]
     kmers, probs = zip(*kmer_probs)
     probs_sum = sum(probs)
-    normalized_probs = [p/probs_sum for p in probs]
+    normalized_probs = [p / probs_sum for p in probs]
     draw = choice(kmers, 1, p=normalized_probs)
     return draw[0]
 
 
-def gibbs_sampler(dna, k, N = 100, times=1000):
+def gibbs_sampler(dna, k, N=100, times=1000):
     best_motifs = [d[:k] for d in dna]
     best_score = score_motifs(best_motifs)
     dnas = len(dna)
@@ -273,6 +348,7 @@ def gibbs_sampler(dna, k, N = 100, times=1000):
                 best_motifs = motifs
                 best_score = score_motifs(best_motifs)
     return best_motifs, best_score
+
 
 if __name__ == "__main__":
     ecoli = open('data\\E_coli.txt').readline()

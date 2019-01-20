@@ -5,7 +5,7 @@ def find_ori(file, txt=''):
     if file:
         dna = ''.join(f.strip() for f in open(file).readlines())
         # utils.plot_skew(dna)
-        min_skew = motifs.get_min_skew_posiion(dna)[0]
+        min_skew = motifs.get_min_skew_position(dna)[0]
         print(min_skew)
         L = 500
         dna_box = dna[min_skew-L:min_skew+L]
