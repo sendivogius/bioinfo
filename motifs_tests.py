@@ -196,7 +196,7 @@ class MotifsTests(unittest.TestCase):
     def test_dist_pattern_single_dna(self):
         self.assertEqual(1, motifs.dist('AAA', 'TTACCTTAAC'))
 
-    def test_dist_pattern_dna(self):
+    def test_dist_pattern_dna_list(self):
         patterns = ['TTACCTTAAC', 'GATATCTGTC', 'ACGGCGTTCG', 'CCCTAAAGAG', 'CGTCAGAGGT']
         self.assertEqual(5, motifs.dist('AAA', patterns))
 
@@ -210,19 +210,21 @@ class MotifsTests(unittest.TestCase):
         self.assertEqual(('GAC', 2), motifs.median_string(patterns, 3))
 
     def test_score_kmer_on_profile(self):
-        profile = [{'A': .2, 'C': .4, 'G': .3, 'T': .1}, {'A': .2, 'C': .3, 'G': .3, 'T': .2},
-                   {'A': .3, 'C': .1, 'G': .5, 'T': .1}, {'A': .2, 'C': .5, 'G': .2, 'T': .1},
+        profile = [{'A': .2, 'C': .4, 'G': .3, 'T': .1},
+                   {'A': .2, 'C': .3, 'G': .3, 'T': .2},
+                   {'A': .3, 'C': .1, 'G': .5, 'T': .1},
+                   {'A': .2, 'C': .5, 'G': .2, 'T': .1},
                    {'A': .3, 'C': .1, 'G': .4, 'T': .2}]
         kmer = 'CCGAG'
         self.assertAlmostEqual(.0048, motifs.score_kmer_on_profile(kmer, profile))
 
     def test_profile_most_probabled_string(self):
-        profile = [{'A': .2, 'C': .4, 'G': .3, 'T': .1}, {'A': .2, 'C': .3, 'G': .3, 'T': .2},
-                   {'A': .3, 'C': .1, 'G': .5, 'T': .1}, {'A': .2, 'C': .5, 'G': .2, 'T': .1},
+        profile = [{'A': .2, 'C': .4, 'G': .3, 'T': .1},
+                   {'A': .2, 'C': .3, 'G': .3, 'T': .2},
+                   {'A': .3, 'C': .1, 'G': .5, 'T': .1},
+                   {'A': .2, 'C': .5, 'G': .2, 'T': .1},
                    {'A': .3, 'C': .1, 'G': .4, 'T': .2}]
-        self.assertEqual('CCGAG', motifs.most_probable_kmer_from_profile(profile,
-                                                                         'ACCTGTTTATTGCCTAAGTTCCGAACAAACCCAATATAGCCCGAGGGCCT')[
-            1])
+        self.assertEqual('CCGAG', motifs.most_probable_kmer_from_profile('ACCTGTTTATTGCCTAAGTTCCGAACAAACCCAATATAGCCCGAGGGCCT', profile))
 
     def test_greedy_motif_search(self):
         dna = ['GGCGTTCAGGCA', 'AAGAATCAGTCA', 'CAAGGAGTTCGC', 'CACGTCAATCAC', 'CAATAATATTCG']
@@ -248,6 +250,27 @@ class MotifsTests(unittest.TestCase):
         expected_score = motifs.score_motifs(expected)
         print(motifs.gibbs_sampler(dna, k, N=2000, times=20))
         self.assertEqual(expected_score, motifs.gibbs_sampler(dna, k, N=100, times=20)[1])
+
+
+    def test_motif_enumeration_no_mismatch(self):
+        dnas = ['CGCCCCTCTCGGGGGTGTTCAGTAACCGGCCA', 'GGGCGAGGTTCTCGGGGGTGCCAAGGTGCCAG',
+                'TCTCGGGGAGACCGAAAGAAGTATACAGGCGT', 'TAGATCAAGTTTCTCGGGGACGTCGGTGAACC',
+                'AATCCACCAGCTCCACGTGCAATGTCTCGGGG']
+
+        k = 8
+        expected_motifs = {'TCTCGGGG'}
+        actual_motifs = motifs.motif_enumeration(dnas, k, 0)
+        self.assertEqual(expected_motifs, actual_motifs)
+
+    def test_motif_enumeration_one_mismatch(self):
+        dnas = ['CGCCCCTCTCGAGGGTGTTCAGTAACCGGCCA', 'GGGCGAGGTTCTCTGGGGTGCCAAGGTGCCAG',
+                'TCTCCGGGAGACCGAAAGAAGTATACAGGCGT', 'TAGATCAAGTTTCTCGGGGACGTCGGTGAACC',
+                'AATCCACCAGCTCCACGTGCAATGTCTCAGGG']
+
+        k = 8
+        expected_motifs = {'TCTCGGGG'}
+        actual_motifs = motifs.motif_enumeration(dnas, k, 1)
+        self.assertEqual(expected_motifs, actual_motifs)
 
     # def test_greedy_motif_search_extra(self):
     #     dna = [
