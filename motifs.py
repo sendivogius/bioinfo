@@ -4,8 +4,7 @@ import operator
 import collections
 from math import log2
 from random import randrange
-
-from numpy.random import choice
+import numpy.random
 
 from utils import is_dna
 
@@ -271,16 +270,29 @@ def get_profile(motifs, relative=True, pseudocounts=False):
     return counts
 
 
-def get_consensus_string(motifs, profile=None):
-    profile = profile or get_profile(motifs)
-    return ''.join(max(m.items(), key=operator.itemgetter(1))[0] for m in profile)
+def get_consensus_string(motifs):
+    """Get most probable kmer describes by motifs
+
+    :param motifs: list of ACTG strings
+    :return:
+    """
+    profile = get_profile(motifs)
+    return ''.join(max(position.items(), key=operator.itemgetter(1))[0] for position in profile)
 
 
 def score_motifs(motifs, entropy=False):
-    if entropy:
-        def _calc_entropy(values):
-            return sum(-v * log2(v) if v else 0.0 for v in values)
+    """Score motifs
 
+    :param motifs: list of ACTG strings
+    :param entropy: flag whether use entropy or number of mismatches
+    :return: cumulative entropy or number of mistmatches
+    """
+    assert (all(is_dna(motif) for motif in motifs))
+
+    def _calc_entropy(values):
+        return sum(-v * log2(v) if v else 0.0 for v in values)
+
+    if entropy:
         profile = get_profile(motifs, relative=True)
         return sum(_calc_entropy(val.values()) for val in profile)
 
@@ -353,16 +365,15 @@ def most_probable_kmer_from_profile(dna, profile):
 def greedy_motif_search(dnas, k):
     """Finds bets motifs in greedy way (selecting best motifs at each iteration)
     Includes pseudocounts (Laplacian smoothing)
-    (2D in BA_AALA)
+    (2D and 2E in BA_AALA)
 
     :param dnas: list of ACTG strings
     :param k: length of kmer
-    :return: list of kmers from each dna
+    :return: tuple(best_motifs, best_score)
     """
     assert (all(is_dna(dna) for dna in dnas))
 
-    best_motifs = [dna[:k] for dna in dnas]
-    best_score = score_motifs(best_motifs)
+    best_motifs, best_score = _get_first_kmers(dnas, k)
 
     for kmer in get_all_kmers(dnas[0], k, ordered=True):
         motifs = [kmer]
@@ -377,53 +388,102 @@ def greedy_motif_search(dnas, k):
     return best_motifs, best_score
 
 
-def get_random_motif(text, k):
-    assert (len(text) - k + 1 > 0)
-    start = randrange(len(text) - k + 1)
-    return text[start:start + k]
+def _get_first_kmers(dnas, k):
+    """Get first kmer from string as motifs
 
+    :param dnas: list of ACTG strings
+    :param k: length of kmer
+    :return: (motifs, motifs_score)
+    """
 
-def randomized_motif_search(dna, k, times=2000):
-    best_motifs = [d[:k] for d in dna]
+    best_motifs = [dna[:k] for dna in dnas]
     best_score = score_motifs(best_motifs)
+    return best_motifs, best_score
+
+
+def get_random_motif(dna, k):
+    """Get random kmer from dna
+
+    :param dna: ACTG string
+    :param k: length of kmer
+    :return: random kmer from dns
+    """
+    assert(is_dna(dna))
+    assert(len(dna) - k + 1 > 0)
+    start = randrange(len(dna) - k + 1)
+    return dna[start:start + k]
+
+
+def randomized_motif_search(dnas, k, times=2000):
+    """Finds bets motifs by randomly selecting set of initial kmers and then iteratively improving profile
+    (2F in BA_AALA)
+
+    :param dnas: list of ACTG strings
+    :param k: length of kmer
+    :param times: number of time the algorithm will be run with different initial kmers
+    :return: tuple(best_motifs, best_score) from `times` runs
+    """
+    assert (all(is_dna(dna) for dna in dnas))
+
+    best_motifs, best_score = _get_first_kmers(dnas, k)
     for run in range(times):
-        motifs = [get_random_motif(d, k) for d in dna]
+        motifs = [get_random_motif(d, k) for d in dnas]
         while True:
             profile = get_profile(motifs, pseudocounts=True)
-            motifs = [most_probable_kmer_from_profile(d, profile) for d in dna]
+            motifs = [most_probable_kmer_from_profile(dna, profile) for dna in dnas]
             motifs_score = score_motifs(motifs)
             if motifs_score < best_score:
                 best_motifs = motifs
-                best_score = score_motifs(best_motifs)
+                best_score = motifs_score
             else:
                 break
     return best_motifs, best_score
 
 
 def get_profile_randomly_generated_kmer(dna, profile):
-    kmer_probs = [(kmer, score_kmer_on_profile(kmer, profile)) for kmer in get_all_kmers(dna, len(profile))]
+    """Get random kmer from dna with chance of being selected defined by profile
+
+    :param dna: ACTG string
+    :param profile: list of dicts with probabilities
+    :return: random kmer with probabilities defined by profile
+    """
+    assert(is_dna(dna))
+
+    k = len(profile)
+    kmer_probs = [(kmer, score_kmer_on_profile(kmer, profile)) for kmer in get_all_kmers(dna, k)]
     kmers, probs = zip(*kmer_probs)
-    probs_sum = sum(probs)
-    normalized_probs = [p / probs_sum for p in probs]
-    draw = choice(kmers, 1, p=normalized_probs)
+    total_prob = sum(probs)
+    normalized_probs = [p / total_prob for p in probs]
+    draw = numpy.random.choice(kmers, 1, p=normalized_probs)
     return draw[0]
 
 
-def gibbs_sampler(dna, k, N=100, times=1000):
-    best_motifs = [d[:k] for d in dna]
-    best_score = score_motifs(best_motifs)
-    dnas = len(dna)
+def gibbs_sampler(dnas, k, N=100, times=1000):
+    """Finds bets motifs by using Gibbs sampling (2G in BA_AALA)
+    Excude single kmer from current motifs set and decide whether to keep it or replace.
+
+
+    :param dnas: list of ACTG strings
+    :param k: length of kmer
+    :param N: number of iterations in one sampling run
+    :param times: number of time sampling will be performed with different initial kmers
+    :return: tuple(best_motifs, best_score) from `times` runs
+    """
+    assert (all(is_dna(dna) for dna in dnas))
+
+    best_motifs, best_score = _get_first_kmers(dnas, k)
+    n_dna = len(dnas)
     for run in range(times):
-        motifs = [get_random_motif(d, k) for d in dna]
+        motifs = [get_random_motif(dna, k) for dna in dnas]
         for _ in range(N):
-            exclude = randrange(dnas)
-            motifs_excluded = [motifs[i] for i in range(dnas) if i != exclude]
+            exclude = randrange(n_dna)
+            motifs_excluded = [motifs[i] for i in range(n_dna) if i != exclude]
             profile = get_profile(motifs_excluded, pseudocounts=True)
-            motifs[exclude] = get_profile_randomly_generated_kmer(dna[exclude], profile)
+            motifs[exclude] = get_profile_randomly_generated_kmer(dnas[exclude], profile)
             motifs_score = score_motifs(motifs)
             if motifs_score < best_score:
                 best_motifs = motifs
-                best_score = score_motifs(best_motifs)
+                best_score = motifs_score
     return best_motifs, best_score
 
 
