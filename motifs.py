@@ -22,7 +22,7 @@ def reverse_complement_strand(dna):
 
 
 def get_all_kmers(pattern, k, ordered=False):
-    """Returns all kmers of pattern.
+    """Returns all kmers for pattern
     Depending on `ordered` returns all kmers as they appear in `pattern` or set of unique kmers
 
     :param pattern: string to look for kmers
@@ -251,12 +251,23 @@ def motif_enumeration(dnas, k, d):
 
 
 def get_profile(motifs, relative=True, pseudocounts=False):
+    """Computes profile of motifs array.
+
+    :param motifs: list of ACTG strings
+    :param relative: flag for computing frequencies instead of counts
+    :param pseudocounts: flag for using Laplacian smoothing
+    :return: list of dicts with counts or frequencies
+    """
+    assert (all(is_dna(motif) for motif in motifs))
     zeroes = dict(itertools.zip_longest('ACTG', [], fillvalue=0))
-    counts = [{**zeroes, **dict(collections.Counter(m))} for m in zip(*motifs)]
+    counts = [{**zeroes, **dict(collections.Counter(nucleotides_at_pos))} for nucleotides_at_pos in zip(*motifs)]
+
     if pseudocounts:
-        counts = [{k: v + 1 for k, v in a.items()} for a in counts]
+        counts = [{nuc: cnt + 1 for nuc, cnt in pos_cnts.items()} for pos_cnts in counts]
+
     if relative:
-        return [{k: v / total for total in (sum(a.values(), 0.0),) for k, v in a.items()} for a in counts]
+        return [{pos: cnt / sum(pos_cnts.values()) for pos, cnt in pos_cnts.items()} for pos_cnts in counts]
+
     return counts
 
 
@@ -340,15 +351,19 @@ def most_probable_kmer_from_profile(dna, profile):
 
 
 def greedy_motif_search(dnas, k):
-    """Find a median string (2D in BA_AALA)
-    Median string is a kmer that minimizes d(pattern, dnas) among all possible kmers
+    """Finds bets motifs in greedy way (selecting best motifs at each iteration)
+    Includes pseudocounts (Laplacian smoothing)
+    (2D in BA_AALA)
 
     :param dnas: list of ACTG strings
     :param k: length of kmer
-    :return: tuple(median_string, dist_median_dnas)
+    :return: list of kmers from each dna
     """
+    assert (all(is_dna(dna) for dna in dnas))
+
     best_motifs = [dna[:k] for dna in dnas]
     best_score = score_motifs(best_motifs)
+
     for kmer in get_all_kmers(dnas[0], k, ordered=True):
         motifs = [kmer]
         for i in range(1, len(dnas)):
