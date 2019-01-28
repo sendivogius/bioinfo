@@ -6,199 +6,301 @@ class MotifsTests(unittest.TestCase):
     def test_reverse_complement_strand(self):
         dna = 'AAAACCCGGT'
         reversed = 'ACCGGGTTTT'
-        self.assertEqual(reversed, motifs.reverse_complement_strand(dna))
+        actual = motifs.reverse_complement_strand(dna)
+        self.assertEqual(reversed, actual)
 
     def test_count_occurrences_overlapping(self):
         dna = 'AAA'
-        self.assertEqual(2, motifs.count_occurrences(dna, 'AA'))
+        expected = 2
+        actual = motifs.count_occurrences(dna, 'AA')
+        self.assertEqual(expected, actual)
 
-    def test_count_occurrences2(self):
+    def test_count_occurrences_non_overlapping(self):
         dna = 'AGCGTGACG'
-        self.assertEqual(2, motifs.count_occurrences(dna, 'CG'))
+        expected = 2
+        actual = motifs.count_occurrences(dna, 'CG')
+        self.assertEqual(expected, actual)
 
-    def test_count_occurrences_approx(self):
-        pattern = 'AAAAA'
+    def test_count_occurrences_hamming_1(self):
         dna = 'AACAAGCTGATAAACATTTAAAGAG'
-        k = 2
-        self.assertEqual(11, motifs.count_occurrences(dna, pattern, k))
+        pattern = 'AAAAA'
+        k = 1
+        expected = 4  # AACAA, ATAAA, AAACA, AAAGA
+        actual = motifs.count_occurrences(dna, pattern, k)
+        self.assertEqual(expected, actual)
 
-    def test_count_occurrences_approx2(self):
+    def test_count_occurrences_hamming_2(self):
         pattern = 'GAGG'
         dna = 'TTTAGAGCCTTCAGAGG'
         k = 2
-        self.assertEqual(4, motifs.count_occurrences(dna, pattern, k))
+        expected = 4  # TAGA, GAGC, CAGA, GAGG
+        actual = motifs.count_occurrences(dna, pattern, k)
+        self.assertEqual(expected, actual)
 
-    def test_find_occurrences(self):
+    def test_find_occurrences_overlapping(self):
         dna = 'AAA'
-        self.assertEqual([0, 1], motifs.find_occurrences(dna, 'AA'))
+        expected = [0, 1]
+        actual = motifs.find_occurrences(dna, 'AA')
+        self.assertEqual(expected, actual)
 
-    def test_find_occurrences2(self):
+    def test_find_occurrences_non_overlapping(self):
         dna = 'AGCGTCGACG'
-        self.assertEqual([2, 5, 8], motifs.find_occurrences(dna, 'CG'))
+        expected = [2, 5, 8]
+        actual = motifs.find_occurrences(dna, 'CG')
+        self.assertEqual(expected, actual)
 
-    def test_find_occurrences3(self):
+    def test_find_occurrences_partially_overlapping(self):
         dna = 'GATATATGCATATACTT'
-        self.assertEqual([1, 3, 9], motifs.find_occurrences(dna, 'ATAT'))
+        expected = [1, 3, 9]
+        actual = motifs.find_occurrences(dna, 'ATAT')
+        self.assertEqual(expected, actual)
 
-    def test_find_occurrences_approx(self):
-        pattern = 'ATTCTGGA'
+    def test_find_occurrences_hamming(self):
         dna = 'CGCCCGAATCCAGAACGCATTCCCATATTTCGGGACCACTGGCCTCCACGGTACGGACGTCAATCAAAT'
+        pattern = 'ATTCTGGA'
         k = 3
-        self.assertEqual([6, 7, 26, 27], motifs.find_occurrences(dna, pattern, k))
+        expected = [6, 7, 26, 27]
+        actual = motifs.find_occurrences(dna, pattern, k)
+        self.assertEqual(expected, actual)
 
     def test_frequent_kmers(self):
         dna = 'ACGTTGCATGTCGCATGATGCATGAGAGCT'
         k = 4
-        self.assertEqual(({'CATG', 'GCAT'}, 3), motifs.frequent_kmers(dna, k))
+        expected = {'CATG', 'GCAT'}, 3
+        actual = motifs.frequent_kmers(dna, k)
+        self.assertEqual(expected, actual)
 
     def test_frequent_kmers2(self):
         dna = 'AAGCAAAGGTGGG'
         k = 2
-        self.assertEqual(({'AA', 'GG'}, 3), motifs.frequent_kmers(dna, k))
+        expected = {'AA', 'GG'}, 3
+        actual = motifs.frequent_kmers(dna, k)
+        self.assertEqual(expected, actual)
 
-    def test_frequent_kmers_approx(self):
+    def test_frequent_kmers_hamming(self):
         dna = 'ACGTTGCATGTCGCATGATGCATGAGAGCT'
         k = 4
         d = 1
-        self.assertEqual(({'GATG', 'ATGC', 'ATGT'}, 5), motifs.frequent_kmers(dna, k, d, False))
+        expected = {'GATG', 'ATGC', 'ATGT'}, 5
+        actual = motifs.frequent_kmers(dna, k, d, False)
+        self.assertEqual(expected, actual)
 
-    def test_frequent_kmers_approx_rev(self):
+    def test_frequent_kmers_hamming_reverse(self):
         dna = 'ACGTTGCATGTCGCATGATGCATGAGAGCT'
         k = 4
         d = 1
-        self.assertEqual(({'ATGT', 'ACAT'}, 9), motifs.frequent_kmers(dna, k, d, True))
+        expected = {'ATGT', 'ACAT'}, 9
+        actual = motifs.frequent_kmers(dna, k, d, True)
+        self.assertEqual(expected, actual)
 
     def test_find_clumps(self):
         dna = 'CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA'
         k = 5
         L = 50
         t = 4
-        self.assertEqual({'CGACA', 'GAAGA'}, motifs.find_clumps(dna, k, L, t))
+        expected = {'CGACA', 'GAAGA'}
+        actual = motifs.find_clumps(dna, k, L, t)
+        self.assertEqual(expected, actual)
 
     def test_pattern_to_number(self):
         dna = 'ATGCAA'
-        self.assertEqual(912, motifs.pattern_to_number(dna))
+        expected = 912
+        actual = motifs.pattern_to_number(dna)
+        self.assertEqual(expected, actual)
 
     def test_pattern_to_number2(self):
         dna = 'CCCATTC'
-        self.assertEqual(5437, motifs.pattern_to_number(dna))
+        expected = 5437
+        actual = motifs.pattern_to_number(dna)
+        self.assertEqual(expected, actual)
 
     def test_pattern_to_number3(self):
         dna = 'TAGTTCCATCGCAGAG'
-        self.assertEqual(3419724066, motifs.pattern_to_number(dna))
+        expected = 3419724066
+        actual = motifs.pattern_to_number(dna)
+        self.assertEqual(expected, actual)
 
     def test_number_to_pattern(self):
         number = 5437
         length = 8
-        self.assertEqual('ACCCATTC', motifs.number_to_pattern(number, length))
+        expected = 'ACCCATTC'
+        actual = motifs.number_to_pattern(number, length)
+        self.assertEqual(expected, actual)
 
     def test_number_to_pattern2(self):
         number = 45
         length = 4
-        self.assertEqual('AGTC', motifs.number_to_pattern(number, length))
+        expected = 'AGTC'
+        actual = motifs.number_to_pattern(number, length)
+        self.assertEqual(expected, actual)
 
     def test_number_to_pattern3(self):
         number = 8111
         length = 9
-        self.assertEqual('AACTTGGTT', motifs.number_to_pattern(number, length))
+        expected = 'AACTTGGTT'
+        actual = motifs.number_to_pattern(number, length)
+        self.assertEqual(expected, actual)
 
     def test_get_skew(self):
         dna = 'CATGGGCATCGGCCATACGCC'
         expected = [int(i) for i in ' 0 -1 -1 -1 0 1 2 1 1 1 0 1 2 1 0 0 0 0 -1 0 -1 -2'.split()]
-        self.assertEqual(expected, motifs.get_skew(dna))
+        actual = motifs.get_skew(dna)
+        self.assertEqual(expected, actual)
 
     def test_get_min_skew_pos(self):
         dna = 'TAAAGACTGCCGAGAGGCCAACACGAGTGCTAGAACGAGGGGCGTAAACGCGGGTCCGAT'
         expected = [11, 24]
-        self.assertEqual(expected, motifs.get_min_skew_position(dna))
+        actual = motifs.get_min_skew_position(dna)
+        self.assertEqual(expected, actual)
 
     def test_hamming_distance(self):
         dna1 = 'GGGCCGTTGGT'
         dna2 = 'GGACCGTTGAC'
         expected = 3
-        self.assertEqual(expected, motifs.hamming(dna1, dna2))
+        actual = motifs.hamming(dna1, dna2)
+        self.assertEqual(expected, actual)
 
     def test_immediate_neighbours(self):
         pattern = 'ACG'
         expected = {'CCG', 'TCG', 'GCG', 'AAG', 'ATG', 'AGG', 'ACA', 'ACC', 'ACT', 'ACG'}
-        self.assertEqual(expected, motifs._get_neighbours(pattern))
+        actual = motifs._get_neighbours(pattern)
+        self.assertEqual(expected, actual)
 
-    def test_immediate_neighbours2(self):
+    def test_immediate_neighbours_one_nucletide(self):
         pattern = 'A'
         expected = {'A', 'C', 'G', 'T'}
-        self.assertEqual(expected, motifs._get_neighbours(pattern))
+        actual = motifs._get_neighbours(pattern)
+        self.assertEqual(expected, actual)
 
-    def test_neighbours_1(self):
+    def test_neighbours_d1(self):
         pattern = 'AAA'
         d = 1
         expected = {'CAA', 'AAT', 'AAG', 'AAC', 'AAA', 'AGA', 'TAA', 'GAA', 'ACA', 'ATA'}
-        self.assertEqual(expected, motifs.get_neighbours(pattern, d))
+        actual = motifs.get_neighbours(pattern, d)
+        self.assertEqual(expected, actual)
 
-    def test_neighbours_2(self):
+    def test_neighbours_d2(self):
         pattern = 'ACT'
         d = 2
         expected = {'AAA', 'AAC', 'AAG', 'AAT', 'ACA', 'ACC', 'ACG', 'ACT', 'AGA', 'AGC', 'AGG', 'AGT', 'ATA', 'ATC',
                     'ATG', 'ATT', 'CAT', 'CCA', 'CCC', 'CCG', 'CCT', 'CGT', 'CTT', 'GAT', 'GCA', 'GCC', 'GCG', 'GCT',
                     'GGT', 'GTT', 'TAT', 'TCA', 'TCC', 'TCG', 'TCT', 'TGT', 'TTT'}
-        self.assertEqual(expected, motifs.get_neighbours(pattern, d))
+        actual = motifs.get_neighbours(pattern, d)
+        self.assertEqual(expected, actual)
 
     def test_get_all_kmers(self):
         pattern = 'GGACCGTTGAC'
         k = 5
         expected = {'GGACC', 'GACCG', 'ACCGT', 'CCGTT', 'CGTTG', 'GTTGA', 'TTGAC'}
-        self.assertEqual(expected, motifs.get_all_kmers(pattern, k))
+        actual = motifs.get_all_kmers(pattern, k)
+        self.assertEqual(expected, actual)
 
-    def test_get_profile(self):
+    def test_get_profile_no_pseudo_no_relative(self):
         patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC',
                     'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
-        self.assertEqual(
-            [{'A': 2, 'C': 1, 'G': 0, 'T': 7}, {'A': 2, 'C': 6, 'G': 0, 'T': 2}, {'A': 0, 'C': 0, 'G': 10, 'T': 0},
-             {'A': 0, 'C': 0, 'G': 10, 'T': 0}, {'A': 0, 'C': 0, 'G': 9, 'T': 1}, {'A': 0, 'C': 0, 'G': 9, 'T': 1},
-             {'A': 9, 'C': 0, 'G': 1, 'T': 0}, {'A': 1, 'C': 4, 'G': 0, 'T': 5}, {'A': 1, 'C': 1, 'G': 0, 'T': 8},
-             {'A': 1, 'C': 2, 'G': 0, 'T': 7}, {'A': 3, 'C': 4, 'G': 0, 'T': 3}, {'A': 0, 'C': 6, 'G': 0, 'T': 4}, ],
-            motifs.get_profile(patterns, relative=False))
+        expected = [{'A': 2, 'C': 1, 'G': 0, 'T': 7},
+                    {'A': 2, 'C': 6, 'G': 0, 'T': 2},
+                    {'A': 0, 'C': 0, 'G': 10, 'T': 0},
+                    {'A': 0, 'C': 0, 'G': 10, 'T': 0},
+                    {'A': 0, 'C': 0, 'G': 9, 'T': 1},
+                    {'A': 0, 'C': 0, 'G': 9, 'T': 1},
+                    {'A': 9, 'C': 0, 'G': 1, 'T': 0},
+                    {'A': 1, 'C': 4, 'G': 0, 'T': 5},
+                    {'A': 1, 'C': 1, 'G': 0, 'T': 8},
+                    {'A': 1, 'C': 2, 'G': 0, 'T': 7},
+                    {'A': 3, 'C': 4, 'G': 0, 'T': 3},
+                    {'A': 0, 'C': 6, 'G': 0, 'T': 4}, ]
+        actual = motifs.get_profile(patterns, relative=False, pseudocounts=False)
+        self.assertEqual(expected, actual)
 
-    def test_get_profile_pseudocounts(self):
+    def test_get_profile_pseudo_no_relative(self):
         patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC',
                     'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
-        self.assertEqual(
-            [{'A': 3, 'C': 2, 'G': 1, 'T': 8}, {'A': 3, 'C': 7, 'G': 1, 'T': 3}, {'A': 1, 'C': 1, 'G': 11, 'T': 1},
-             {'A': 1, 'C': 1, 'G': 11, 'T': 1}, {'A': 1, 'C': 1, 'G': 10, 'T': 2}, {'A': 1, 'C': 1, 'G': 10, 'T': 2},
-             {'A': 10, 'C': 1, 'G': 2, 'T': 1}, {'A': 2, 'C': 5, 'G': 1, 'T': 6}, {'A': 2, 'C': 2, 'G': 1, 'T': 9},
-             {'A': 2, 'C': 3, 'G': 1, 'T': 8}, {'A': 4, 'C': 5, 'G': 1, 'T': 4}, {'A': 1, 'C': 7, 'G': 1, 'T': 5}, ],
-            motifs.get_profile(patterns, relative=False, pseudocounts=True))
+        expected = [{'A': 3, 'C': 2, 'G': 1, 'T': 8},
+                    {'A': 3, 'C': 7, 'G': 1, 'T': 3},
+                    {'A': 1, 'C': 1, 'G': 11, 'T': 1},
+                    {'A': 1, 'C': 1, 'G': 11, 'T': 1},
+                    {'A': 1, 'C': 1, 'G': 10, 'T': 2},
+                    {'A': 1, 'C': 1, 'G': 10, 'T': 2},
+                    {'A': 10, 'C': 1, 'G': 2, 'T': 1},
+                    {'A': 2, 'C': 5, 'G': 1, 'T': 6},
+                    {'A': 2, 'C': 2, 'G': 1, 'T': 9},
+                    {'A': 2, 'C': 3, 'G': 1, 'T': 8},
+                    {'A': 4, 'C': 5, 'G': 1, 'T': 4},
+                    {'A': 1, 'C': 7, 'G': 1, 'T': 5}, ],
+        actual = motifs.get_profile(patterns, relative=False, pseudocounts=True)
+        self.assertEqual(expected, actual)
 
-    def test_get_profile_relative(self):
+    def test_get_profile_no_pseudo_relative(self):
         patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC',
                     'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
-        self.assertEqual(
-            [{'A': .2, 'C': .1, 'G': 0, 'T': .7}, {'A': .2, 'C': .6, 'G': 0, 'T': .2}, {'A': 0, 'C': 0, 'G': 1, 'T': 0},
-             {'A': 0, 'C': 0, 'G': 1, 'T': 0}, {'A': 0, 'C': 0, 'G': .9, 'T': .1}, {'A': 0, 'C': 0, 'G': .9, 'T': .1},
-             {'A': .9, 'C': 0, 'G': .1, 'T': 0}, {'A': .1, 'C': .4, 'G': 0, 'T': .5},
-             {'A': .1, 'C': .1, 'G': 0, 'T': .8}, {'A': .1, 'C': .2, 'G': 0, 'T': .7},
-             {'A': .3, 'C': .4, 'G': 0, 'T': .3}, {'A': 0, 'C': .6, 'G': 0, 'T': .4}, ], motifs.get_profile(patterns))
+        expected = [{'A': .2, 'C': .1, 'G': 0, 'T': .7},
+                    {'A': .2, 'C': .6, 'G': 0, 'T': .2},
+                    {'A': 0, 'C': 0, 'G': 1, 'T': 0},
+                    {'A': 0, 'C': 0, 'G': 1, 'T': 0},
+                    {'A': 0, 'C': 0, 'G': .9, 'T': .1},
+                    {'A': 0, 'C': 0, 'G': .9, 'T': .1},
+                    {'A': .9, 'C': 0, 'G': .1, 'T': 0},
+                    {'A': .1, 'C': .4, 'G': 0, 'T': .5},
+                    {'A': .1, 'C': .1, 'G': 0, 'T': .8},
+                    {'A': .1, 'C': .2, 'G': 0, 'T': .7},
+                    {'A': .3, 'C': .4, 'G': 0, 'T': .3},
+                    {'A': 0, 'C': .6, 'G': 0, 'T': .4}]
+        actual = motifs.get_profile(patterns, relative=True, pseudocounts=False)
+        self.assertEqual(expected, actual)
+
+    def test_get_profile_pseudo_relative(self):
+        patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC',
+                    'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
+        expected = [{'A': 3. / 14, 'C': 2. / 14, 'G': 1. / 14, 'T': 8. / 14},
+                    {'A': 3. / 14, 'C': 7. / 14, 'G': 1. / 14, 'T': 3. / 14},
+                    {'A': 1. / 14, 'C': 1. / 14, 'G': 11. / 14, 'T': 1. / 14},
+                    {'A': 1. / 14, 'C': 1. / 14, 'G': 11. / 14, 'T': 1. / 14},
+                    {'A': 1. / 14, 'C': 1. / 14, 'G': 10. / 14, 'T': 2. / 14},
+                    {'A': 1. / 14, 'C': 1. / 14, 'G': 10. / 14, 'T': 2. / 14},
+                    {'A': 10. / 14, 'C': 1. / 14, 'G': 2. / 14, 'T': 1. / 14},
+                    {'A': 2. / 14, 'C': 5. / 14, 'G': 1. / 14, 'T': 6. / 14},
+                    {'A': 2. / 14, 'C': 2. / 14, 'G': 1. / 14, 'T': 9. / 14},
+                    {'A': 2. / 14, 'C': 3. / 14, 'G': 1. / 14, 'T': 8. / 14},
+                    {'A': 4. / 14, 'C': 5. / 14, 'G': 1. / 14, 'T': 4. / 14},
+                    {'A': 1. / 14, 'C': 7. / 14, 'G': 1. / 14, 'T': 5. / 14}, ]
+        actual = motifs.get_profile(patterns, relative=True, pseudocounts=True)
+        self.assertEqual(expected, actual)
 
     def test_get_consensus_string(self):
         patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC',
                     'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
-        self.assertEqual('TCGGGGATTTCC', motifs.get_consensus_string(patterns))
+        expected = 'TCGGGGATTTCC'
+        actual = motifs.get_consensus_string(patterns)
+        self.assertEqual(expected, actual)
 
-    def test_score_motif_simple(self):
+    def test_score_motif_mismatches(self):
         patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC',
                     'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
-        self.assertEqual(30, motifs.score_motifs(patterns))
+        expected = 30
+        actual = motifs.score_motifs(patterns)
+        self.assertEqual(expected, actual)
 
-    def test_score_motif_accurate(self):
+    def test_score_motif_entropy(self):
         patterns = ['TCGGGGGTTTTT', 'CCGGTGACTTAC', 'ACGGGGATTTTC', 'TTGGGGACTTTT', 'AAGGGGACTTCC', 'TTGGGGACTTCC',
                     'TCGGGGATTCAT', 'TCGGGGATTCCT', 'TAGGGGAACTAC', 'TCGGGTATAACC']
-        self.assertAlmostEqual(9.9163, motifs.score_motifs(patterns, entropy=True), places=4)
+        expected = 9.9163
+        actual = motifs.score_motifs(patterns, entropy=True)
+        self.assertAlmostEqual(expected, actual, places=4)
 
     def test_dist_pattern_single_dna(self):
-        self.assertEqual(1, motifs.dist('AAA', 'TTACCTTAAC'))
+        pattern = 'AAA'
+        dna = 'TTACCTTAAC'
+        expected = 1  # for AAC
+        actual = motifs.dist(pattern, dna)
+        self.assertEqual(expected, actual)
 
     def test_dist_pattern_dna_list(self):
-        patterns = ['TTACCTTAAC', 'GATATCTGTC', 'ACGGCGTTCG', 'CCCTAAAGAG', 'CGTCAGAGGT']
-        self.assertEqual(5, motifs.dist('AAA', patterns))
+        pattern = 'AAA'
+        dnas = ['TTACCTTAAC', 'GATATCTGTC', 'ACGGCGTTCG', 'CCCTAAAGAG', 'CGTCAGAGGT']
+        expected = 5
+        actual = motifs.dist(pattern, dnas)
+        self.assertEqual(expected, actual)
 
     def test_dist_pattern_dna2(self):
         patterns = 'TCACGATTGATAAGAAGCACCTACCCATTCGGATTGAGTGATAGTTTCACACCTCCCCACGACTTCCAATGTGTACGAAGAACTCTTCGACGAT GTCTTCGCTCGCTCCATTCCACATGGGGACGCCCAGGCCGGCGACCTATGACCTTGAAGTTCGGGCGGAGCGTTGAAAAATCCGACCGCGAGGA GTTGATAAGTATTAGTTAATGAGTGACGCTCGAATATAACAAAAAGACAGATCTAGAAACAAAGCAAATCCCGGCTAAAGAACGACCTCCGGTG GCCATCAATCGGGGGAACTCCTAAAGAGACAGGCTGCCGTGCGATGAGGACCTAAGGTGTTTTTGTCCTCGTAGGCTAGCGTAATACTGGCAAT GAACAATGGCAGACGACCTATTGGACCAAACATCTGCTTCCATCCCTATGACTAGCCGATCGTTGCGACGGATCATGTGGACGGCTCGTGCGAA GCACCCATTTTGTAGATTGTTACGTCCCAGTCCAACAAGACCCAGTGTTTACCTGCAGTACTAAGACGCGTGCGATACAGTCAACTACGGGTGG AGCATGCGGTATAAGCGCAGCAAACAGAGATATCAATCGGTGCAGCTGAGTTTGGGTTCTACGTCCCTAGGGCCCATGAGCTATGAAGAATTGT TGGGGAGTGACGAACGAGGGCTATTATGTGCTTCCCCGATCGGGGAGCTAGAATCCTGACGTTAAGTCCCGAGCCCAGAAGCTACAGCTCATCT ACTATAAGGGTATAATTTTGGTATAAATGCAACGGGGGATATGCAACCTCAGGGCATGTGTGGTACGACAAACAACGCTCTTTTTGTCCGGCCG TGGCCGAGACCCGTCTCTATCGATAAATGTGATACCTGCTGGTCGTATCGTGAGATACGAAGGAGGTGGCAGTGAGGACACAGGACCGTAGCCA TACATGGCCATCATTACGTGTTCCTCGCTCACCTAGTCTTCAGGCGACCGACACTCTAGGGAATTGAGGACCTGGTATTGTACCATGAAGAAGA TGAAAGAGGGGGGTTGAATAGGTACACATAACCCAAAGCGAATCGCTGGGATCCGGTATCCCAAGTGGTTCGTTTCCTGTTCCCGTGCGCCCTA CTGATACCAGCATGACCTACACCCTCGTACCGATGATCCGTAGCACTACAAAGGACAGACTCGGGATTAGTAAACTTATGTAGCGTGCAGGCCG GGCTAAAGTAAGCAGTCTGATGTACCTTGCCTTGCATCCTATGCATTTTCCTCGGGTCCGTTGAGCATTTTTGCGGATCTCTGCCCGAAGTGGC ACTGCACACAATGCTTATGAGGCACCTCGGTTTCAAGTCGGAATAGTTGCTATTTTGAATACATGGTTGTAAGTTTGAAGTCGAAGTAGCCGAT GTCTAGTATTATATGTGGGTTTTCGAGATAAGTATCCTCAAGCGCTTTTAACGTGGATCCGGCCCTTGCGCTAGTGCACATGAGGGGATCACGA ACCGCGGTCCATACCGAACACGCCAGGCATAATAACGGGCTGAGAATCGGAGCTCCAGTAAGGATGTTATTAGTGTACGCCAGCAAACTAGTAT GGGACACAGGGTGAATATCGAGGCAAATCAAGAATCAGCTCGAAATTGCTCGGCTAACCTTGTTCACCTGAGCATATGTCGGGAAATTGCTTCG TGGCTCTATAAACCCTTATTGACGAGGAAAGTTTGCCGAACTCTTTACCGGAGATAACCATCCTACGTCCGGTACACGACGGTTGAACTAGTGT ACTGTGGAGTATCACACGTGGTACTTACATAATTCACTGTTACATAGGCAGACAGGGTCGCGCCGCGTAGGACTGGGCAATTCCGGAAATTTAC CTTTTGGCCAGCTACCGTAGCACAGGGGTGAGTTACATCTCTTATTCTTGAGGCGTTATAGCACTGAGGTTTCGAACAGGAATGGTGCGGGAAC AAGGCGTACGGTGCATCCGGTGTGCGGGCGGTAGCCAGATTGCAATATCCCCCCTTGACGCATGTAGTCCCTGAACCTCGTGGCCCCATTCTGA TCCGGGCTATACGAATAGATCGAAGCTCGTTAGGAGCGGTTTGCATGATATGTTGGCGACTCTGTCTAACATAGGCGGGAGGTTCTCGGGCTCC GCTGGCATTAAGGTTTGAAACTAGTATGACTCACAGTTAAACGCGCCTGATAAGAAGCCATTAGTTCTTGTAGAGTTATAATATGTATGATACA GCTGATGGATTTCAACACATACAAGGAACGCTGCTGTTATTAGTCCAATCATACGCCTATTACACTATGGTCCTTAATCCTGTGTACTACGACA AACGTTCGGCCGATGAGGATTTCTTAGCAGGCATCGCGTACGTGCGTGCGCATCCTGTATGGAATTGTTTCTGTAGTTCAAGGCCCGGATGTTC GCCCACGGTAACGCCAACGCGTCCGACTCACTCTACTTAATGCCTGGTATATCTAGATGACCTGACCAAACGGCGGGAGGTAGTGTGCTTATTT GTGGTTTGATCCAGGTCCGCCTTCGCGAGGAAGATTACTTGGCACCTTGTACCTTGGCTCACCGTGCAATGATGACTCTCCATCTCCAGCATGG CTGGTGGAACCTCGGTCCGCTGGCCGGATCTGCATCATTGGATATCTATACCACAGAACCTTCCGCAGAAAGCGACCAGCATACGGGGGATGCC GTGGCGAACTAGCGATGATGCCCGGACTGGCCGTGACAATATTATAGGCGACCAAATCCTCATGTCACCCGGAGAGGTGTTTGATTTTGGATAA GCGGGAAACAAAGAGCATTTGTTTCCGGACCTTAGCCTACTGTGATCATGGGGCCATGCTAGTGCGTTTAACACGGAACTGCGGAGGGGATGTG GCCTCCCTGCCAATTCATTCAATGTAAGACTGGATTAATTGAGTGGGGTGTAATTCGAGAGGGTCAAAGGGAGAGGAGTTCTACTCCTTCTTAT CTGGGACACGGTTGAAGGCGGCGACGTTCTCAGATATGCAGTTTCTTCCCGATGGCCTACTTGTCCTGGTCCTATCCAATTTCTTCTAAAATCA GAAAATGAGCTTCCTATACCATGCGCGAGAACGGCAGATCAGTCCCACGTGAACAGTGGGTTGAGCGTGCCTAATCGTATGGTCGATGACGATC AAAGCAATGATGCTTAATTCGTGGTAACTGGGGATACTCACCAGAAGGAAATCAAGACTTTTAATTATTGGATTGGATCATCACGTGGCTCGCA GCCGCCGCAGCATAACTTGTAATACCTAGTAGGCGCCGAAAACAGTTCTTGCTAAGCAGCTTAAGCTATGCGCTTGAAGTACGTATATAGAGAT'.split(
@@ -224,7 +326,10 @@ class MotifsTests(unittest.TestCase):
                    {'A': .3, 'C': .1, 'G': .5, 'T': .1},
                    {'A': .2, 'C': .5, 'G': .2, 'T': .1},
                    {'A': .3, 'C': .1, 'G': .4, 'T': .2}]
-        self.assertEqual('CCGAG', motifs.most_probable_kmer_from_profile('ACCTGTTTATTGCCTAAGTTCCGAACAAACCCAATATAGCCCGAGGGCCT', profile))
+        self.assertEqual('CCGAG',
+                         motifs.most_probable_kmer_from_profile(
+                             'ACCTGTTTATTGCCTAAGTTCCGAACAAACCCAATATAGCCCGAGGGCCT',
+                             profile))
 
     def test_greedy_motif_search(self):
         dna = ['GGCGTTCAGGCA', 'AAGAATCAGTCA', 'CAAGGAGTTCGC', 'CACGTCAATCAC', 'CAATAATATTCG']
@@ -250,7 +355,6 @@ class MotifsTests(unittest.TestCase):
         expected_score = motifs.score_motifs(expected)
         print(motifs.gibbs_sampler(dna, k, N=2000, times=20))
         self.assertEqual(expected_score, motifs.gibbs_sampler(dna, k, N=100, times=20)[1])
-
 
     def test_motif_enumeration_no_mismatch(self):
         dnas = ['CGCCCCTCTCGGGGGTGTTCAGTAACCGGCCA', 'GGGCGAGGTTCTCGGGGGTGCCAAGGTGCCAG',
@@ -330,6 +434,5 @@ class MotifsTests(unittest.TestCase):
     #     b = utils.score_motifs(utils.greedy_motif_search(dna, k))
     #     self.assertEqual(expected, utils.greedy_motif_search(dna, k))
 
-
-if __name__ == '__main__':
-    unittest.main()
+    if __name__ == '__main__':
+        unittest.main()

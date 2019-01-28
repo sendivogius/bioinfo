@@ -64,7 +64,7 @@ def frequent_kmers(genome, k, d=0, reverse=False):
     :param genome: ACTG string
     :param k: length of kmer
     :param d: number of allowed mismatches
-    :param reverse: flag whether include revese complement strand
+    :param reverse: flag whether include reverse complement strand
     :return: tuple ({kmer1,kmer2,..), num_of_occurences
     """
     assert (is_dna(genome))
@@ -83,8 +83,8 @@ def frequent_kmers(genome, k, d=0, reverse=False):
         elif kmer_counts > max_kmers_cnt:
             max_kmers = [kmer]
             max_kmers_cnt = kmer_counts
-        if i % 5000 == 0:
-            print(i)
+        # if i % 5000 == 0:
+        #     print(i)
     return set(max_kmers), max_kmers_cnt
 
 
