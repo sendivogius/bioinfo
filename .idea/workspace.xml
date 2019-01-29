@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8b5132d7-8849-4461-bfe3-684ed748326a" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/motifs.py" beforeDir="false" afterPath="$PROJECT_DIR$/motifs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/motifs_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/motifs_tests.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,38 +15,69 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration_no_mismatch.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch Coverage Results" MODIFIED="1548524171158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_spectral_convolution.coverage" NAME="Unittests for aa_tests.AaTests.test_spectral_convolution Coverage Results" MODIFIED="1536856138859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_find_occurrences.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_find_occurrences Coverage Results" MODIFIED="1548715927178" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_reverse_strand.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_reverse_strand Coverage Results" MODIFIED="1547072660158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_get_profile_pseudo_relative.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_get_profile_pseudo_relative Coverage Results" MODIFIED="1548718696681" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_find_occurrences_overlapping.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_find_occurrences_overlapping Coverage Results" MODIFIED="1548716196551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_score_motif_entropy.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_score_motif_entropy Coverage Results" MODIFIED="1548718817740" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$aa.coverage" NAME="aa Coverage Results" MODIFIED="1536957577129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_aa_spectrum_linear.coverage" NAME="Unittests for aa_tests.AaTests.test_aa_spectrum_linear Coverage Results" MODIFIED="1536763032602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_neighbours_2.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_neighbours_2 Coverage Results" MODIFIED="1548015166720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_frequent_kmers.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_frequent_kmers Coverage Results" MODIFIED="1548716208107" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_dist_pattern_dna_list.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_dist_pattern_dna_list Coverage Results" MODIFIED="1548719137504" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration_no_mismatch.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch Coverage Results" MODIFIED="1548805043520" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_leadeboard_cyclopeptide_sequencing_spectrum.coverage" NAME="Unittests for aa_tests.AaTests.test_leadeboard_cyclopeptide_sequencing_spectrum Coverage Results" MODIFIED="1536872553787" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_leadeboard_cyclopeptide_sequencing.coverage" NAME="Unittests for aa_tests.AaTests.test_leadeboard_cyclopeptide_sequencing Coverage Results" MODIFIED="1536757865235" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_spectral_convolution.coverage" NAME="Unittests for aa_tests.AaTests.test_spectral_convolution Coverage Results" MODIFIED="1536856138859" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_find_occurrences.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_find_occurrences Coverage Results" MODIFIED="1548013964407" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_find_occurrences_partially_overlapping.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_find_occurrences_partially_overlapping Coverage Results" MODIFIED="1548716202063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_gibs_sampling.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_gibs_sampling Coverage Results" MODIFIED="1548804988208" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_dist_pattern_single_dna.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_dist_pattern_single_dna Coverage Results" MODIFIED="1548718962872" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_get_min_skew_pos.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_get_min_skew_pos Coverage Results" MODIFIED="1548716623605" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_greedy_motif_search_extra.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra Coverage Results" MODIFIED="1548805369485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_find_occurrences_hamming.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_find_occurrences_hamming Coverage Results" MODIFIED="1548716204880" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration_one_mismatch.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch Coverage Results" MODIFIED="1548805055191" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_reverse_complement_strand.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_reverse_complement_strand Coverage Results" MODIFIED="1548716176366" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_motif_enumeration Coverage Results" MODIFIED="1548524097624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_find_occurrences_non_overlapping.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_find_occurrences_non_overlapping Coverage Results" MODIFIED="1548716199281" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_neighbours_d1.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_neighbours_d1 Coverage Results" MODIFIED="1548716719169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_spectral_convolution_multiple.coverage" NAME="Unittests for aa_tests.AaTests.test_spectral_convolution_multiple Coverage Results" MODIFIED="1536871303372" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_number_to_pattern.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_number_to_pattern Coverage Results" MODIFIED="1548716523111" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_get_consensus_string.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_get_consensus_string Coverage Results" MODIFIED="1548718607343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_frequent_kmers2.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_frequent_kmers2 Coverage Results" MODIFIED="1548716160666" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_count_occurrences_hamming_2.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_count_occurrences_hamming_2 Coverage Results" MODIFIED="1548716193617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_UtilsTests_test_reverse_strand.coverage" NAME="Unittests for motifs_tests.UtilsTests.test_reverse_strand Coverage Results" MODIFIED="1547072614495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_get_profile_no_pseudo_relative.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_get_profile_no_pseudo_relative Coverage Results" MODIFIED="1548718039145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_count_occurrences_approx.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_count_occurrences_approx Coverage Results" MODIFIED="1548715617592" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_count_occurrences_non_overlapping.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_count_occurrences_non_overlapping Coverage Results" MODIFIED="1548716183844" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_hamming_distance.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_hamming_distance Coverage Results" MODIFIED="1548716643262" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_immediate_neighbours_one_nucletide.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_immediate_neighbours_one_nucletide Coverage Results" MODIFIED="1548716685096" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_greedy_motif_search.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_greedy_motif_search Coverage Results" MODIFIED="1548804651413" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_score_motif_simple.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_score_motif_simple Coverage Results" MODIFIED="1548718754913" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_get_skew.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_get_skew Coverage Results" MODIFIED="1548716580785" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_count_occurrences_overlapping.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_count_occurrences_overlapping Coverage Results" MODIFIED="1548716178819" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_trim_leaderboard_tie.coverage" NAME="Unittests for aa_tests.AaTests.test_trim_leaderboard_tie Coverage Results" MODIFIED="1536958802315" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_peptide_score_linear.coverage" NAME="Unittests for aa_tests.AaTests.test_peptide_score_linear Coverage Results" MODIFIED="1536958688495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_reverse_strand.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_reverse_strand Coverage Results" MODIFIED="1547072660158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_in_motifs_tests_py.coverage" NAME="Unittests in motifs_tests.py Coverage Results" MODIFIED="1548715049514" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration_one_mismatch.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch Coverage Results" MODIFIED="1548524763516" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_number_to_pattern3.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_number_to_pattern3 Coverage Results" MODIFIED="1548716562749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_in_motifs_tests_py.coverage" NAME="Unittests in motifs_tests.py Coverage Results" MODIFIED="1548716125367" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_randomized_motif_search.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_randomized_motif_search Coverage Results" MODIFIED="1548804874555" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests.coverage" NAME="Unittests for aa_tests.AaTests Coverage Results" MODIFIED="1536872387749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_in_utils_tests_py.coverage" NAME="Unittests in utils_tests.py Coverage Results" MODIFIED="1548012585803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$aa.coverage" NAME="aa Coverage Results" MODIFIED="1536957577129" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_UtilsTests_test_reverse_strand.coverage" NAME="Unittests for motifs_tests.UtilsTests.test_reverse_strand Coverage Results" MODIFIED="1547072614495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/.." />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_motif_enumeration Coverage Results" MODIFIED="1548524097624" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_aa_spectrum_linear.coverage" NAME="Unittests for aa_tests.AaTests.test_aa_spectrum_linear Coverage Results" MODIFIED="1536763032602" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_spectral_convolution_multiple.coverage" NAME="Unittests for aa_tests.AaTests.test_spectral_convolution_multiple Coverage Results" MODIFIED="1536871303372" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_neighbours_2.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_neighbours_2 Coverage Results" MODIFIED="1548015166720" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_number_to_pattern2.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_number_to_pattern2 Coverage Results" MODIFIED="1548716538754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_count_occurrences_hamming_1.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_count_occurrences_hamming_1 Coverage Results" MODIFIED="1548716189441" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="-947535772">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="8" />
+          <entry key="project.closed" value="9" />
           <entry key="project.open.time.1" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.4" value="1" />
           <entry key="project.open.time.6" value="5" />
           <entry key="project.open.time.7" value="4" />
-          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.8" value="3" />
           <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="18" />
+          <entry key="project.opened" value="19" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -55,7 +86,7 @@
           <entry key="md" value="1" />
           <entry key="png" value="1" />
           <entry key="pstat" value="2" />
-          <entry key="py" value="50" />
+          <entry key="py" value="52" />
           <entry key="txt" value="16" />
         </counts>
       </usages-collector>
@@ -65,20 +96,20 @@
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="17" />
           <entry key="Profiler Session" value="2" />
-          <entry key="Python" value="50" />
+          <entry key="Python" value="52" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="119" />
           <entry key="dummy" value="16" />
-          <entry key="py" value="16610" />
+          <entry key="py" value="17857" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="16" />
-          <entry key="Python" value="16729" />
+          <entry key="Python" value="17976" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -87,53 +118,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/motifs.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="365" column="80" lean-forward="true" selection-start-line="365" selection-start-column="80" selection-end-line="365" selection-end-column="80" />
+            <state relative-caret-position="168">
+              <caret line="289" selection-start-line="289" selection-end-line="289" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
-                <element signature="e#278#502#0" />
-                <element signature="e#555#1016#0" />
-                <element signature="e#1065#1574#0" />
-                <element signature="e#1624#1980#0" />
-                <element signature="e#2038#3131#0" />
-                <element signature="e#3165#3472#0" />
-                <element signature="e#3512#3916#0" />
-                <element signature="e#3948#4050#0" />
-                <element signature="e#4091#5126#0" />
-                <element signature="e#5161#5405#0" />
-                <element signature="e#5451#5814#0" />
-                <element signature="e#5843#6332#0" />
-                <element signature="e#6374#6691#0" />
-                <element signature="e#6721#6924#0" />
-                <element signature="e#6958#7195#0" />
-                <element signature="e#7237#7882#0" />
-                <marker date="1548715062136" expanded="true" signature="6089:6093" ph="..." />
+                <marker date="1548716250758" expanded="true" signature="6094:6098" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20">
+              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/motifs_tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="241" selection-start-line="241" selection-end-line="241" />
+            <state relative-caret-position="300">
+              <caret line="386" lean-forward="true" selection-start-line="386" selection-end-line="386" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1548552140786" expanded="true" signature="15112:15970" ph="..." />
+                <element signature="e#8848#9837#0" />
+                <marker date="1548805388038" expanded="true" signature="15601:16520" ph="..." />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/unittest/case.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="817" column="26" selection-start-line="817" selection-start-column="26" selection-end-line="817" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -150,9 +166,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>theor</find>
-      <find>masses</find>
-      <find>,</find>
       <find>count</find>
       <find>cl</find>
       <find>BA_AAAA</find>
@@ -164,13 +177,10 @@
       <find>patter</find>
       <find>frequen</find>
       <find>CATG</find>
-      <find>GAAGA</find>
       <find>enum</find>
-      <find>TCTCGGGG</find>
       <find>TTC</find>
       <find>get_all_kmer</find>
       <find>greed</find>
-      <find>GAC</find>
       <find>2C</find>
       <find>2c</find>
       <find>profile</find>
@@ -179,7 +189,13 @@
       <find>TCGGGGATTTCC</find>
       <find>randomi</find>
       <find>_get</find>
+      <find>CG</find>
+      <find>GCAT</find>
+      <find>ACGTTGCATGTCGCATGATGCATGAGAGCT</find>
       <find>return best</find>
+      <find>GAAGA</find>
+      <find>GAC</find>
+      <find>TCTCGGGG</find>
     </findStrings>
     <replaceStrings>
       <replace>','</replace>
@@ -203,8 +219,8 @@
         <option value="$PROJECT_DIR$/aa_tests.py" />
         <option value="$PROJECT_DIR$/utils_tests.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/motifs_tests.py" />
         <option value="$PROJECT_DIR$/motifs.py" />
+        <option value="$PROJECT_DIR$/motifs_tests.py" />
       </list>
     </option>
   </component>
@@ -215,7 +231,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="-7" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
     <option name="width" value="1559" />
     <option name="height" value="1047" />
   </component>
@@ -267,7 +284,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests in motifs_tests.py">
+  <component name="RunManager" selected="Python tests.Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -290,7 +307,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for motifs_tests.MotifsTests.test_motif_enumeration" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for motifs_tests.MotifsTests.test_gibs_sampling" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="IntroToBioinf" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -301,7 +318,22 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;motifs_tests.MotifsTests.test_motif_enumeration&quot;" />
+      <option name="_new_target" value="&quot;motifs_tests.MotifsTests.test_gibs_sampling&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="IntroToBioinf" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;motifs_tests.MotifsTests.test_greedy_motif_search_extra&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
@@ -335,7 +367,7 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for motifs_tests.MotifsTests.test_neighbours_2" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for motifs_tests.MotifsTests.test_randomized_motif_search" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="IntroToBioinf" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -346,23 +378,8 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;motifs_tests.MotifsTests.test_neighbours_2&quot;" />
+      <option name="_new_target" value="&quot;motifs_tests.MotifsTests.test_randomized_motif_search&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Unittests in motifs_tests.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="IntroToBioinf" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/motifs_tests.py&quot;" />
-      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
@@ -381,19 +398,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python tests.Unittests in motifs_tests.py" />
-      <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_neighbours_2" />
-      <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration" />
+      <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_randomized_motif_search" />
+      <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_gibs_sampling" />
       <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch" />
       <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch" />
+      <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests in motifs_tests.py" />
+        <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" />
         <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch" />
         <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch" />
-        <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration" />
-        <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_neighbours_2" />
+        <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_gibs_sampling" />
+        <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_randomized_motif_search" />
       </list>
     </recent_temporary>
   </component>
@@ -411,55 +428,55 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 01h 43m 09s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_randomized_motif_search - 2019.01.30 at 00h 34m 36s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_randomized_motif_search" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 23h 17m 01s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_gibs_sampling - 2019.01.30 at 00h 35m 58s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_gibs_sampling" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 23h 20m 27s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_gibs_sampling - 2019.01.30 at 00h 36m 09s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_gibs_sampling" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 23h 20m 47s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_gibs_sampling - 2019.01.30 at 00h 36m 12s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_gibs_sampling" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 23h 21m 09s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_gibs_sampling - 2019.01.30 at 00h 36m 17s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_gibs_sampling" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 23h 36m 30s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_gibs_sampling - 2019.01.30 at 00h 36m 29s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_gibs_sampling" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 23h 36m 42s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration_no_mismatch - 2019.01.30 at 00h 37m 23s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 23h 37m 09s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration_one_mismatch - 2019.01.30 at 00h 37m 35s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 23h 37m 10s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_greedy_motif_search_extra - 2019.01.30 at 00h 38m 23s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.01.28 at 23h 37m 48s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_greedy_motif_search_extra - 2019.01.30 at 00h 42m 52s.xml">
+      <configuration name="Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.11247335" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09115139" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49733475" weight="0.32827735" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7249467" visible="true" weight="0.39761648" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7270789" weight="0.37703142" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.7228145" visible="true" weight="0.39761648" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7254797" weight="0.22318527" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.2750533" side_tool="true" visible="true" weight="0.39761648" />
-      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.49946696" weight="0.32827735" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.2771855" side_tool="true" visible="true" weight="0.39761648" />
+      <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4989339" weight="0.32827735" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
       <window_info anchor="bottom" id="Concurrent Activities Diagram" order="13" sideWeight="0.49946696" weight="0.32936078" />
@@ -468,7 +485,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Data View" order="3" />
       <window_info anchor="right" id="Database" order="4" />
-      <window_info anchor="right" id="SciView" order="5" visible="true" weight="0.32995737" />
+      <window_info anchor="right" id="SciView" order="5" visible="true" weight="0.26332623" />
       <window_info anchor="right" id="Coverage" order="6" side_tool="true" />
     </layout>
     <layout-to-restore>
@@ -540,6 +557,11 @@
           <url>file://$PROJECT_DIR$/aa.py</url>
           <line>273</line>
           <option name="timeStamp" value="307" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/motifs_tests.py</url>
+          <line>267</line>
+          <option name="timeStamp" value="311" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -744,13 +766,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/random.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="176">
@@ -758,47 +773,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/motifs_tests.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/unittest/case.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="168">
-          <caret line="241" selection-start-line="241" selection-end-line="241" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1548552140786" expanded="true" signature="15112:15970" ph="..." />
-          </folding>
+          <caret line="823" column="16" selection-start-line="823" selection-start-column="16" selection-end-line="823" selection-end-column="16" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/unittest/case.py">
+    <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="817" column="26" selection-start-line="817" selection-start-column="26" selection-end-line="817" selection-end-column="26" />
+        <state relative-caret-position="20">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/motifs.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="365" column="80" lean-forward="true" selection-start-line="365" selection-start-column="80" selection-end-line="365" selection-end-column="80" />
+        <state relative-caret-position="168">
+          <caret line="289" selection-start-line="289" selection-end-line="289" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
-            <element signature="e#278#502#0" />
-            <element signature="e#555#1016#0" />
-            <element signature="e#1065#1574#0" />
-            <element signature="e#1624#1980#0" />
-            <element signature="e#2038#3131#0" />
-            <element signature="e#3165#3472#0" />
-            <element signature="e#3512#3916#0" />
-            <element signature="e#3948#4050#0" />
-            <element signature="e#4091#5126#0" />
-            <element signature="e#5161#5405#0" />
-            <element signature="e#5451#5814#0" />
-            <element signature="e#5843#6332#0" />
-            <element signature="e#6374#6691#0" />
-            <element signature="e#6721#6924#0" />
-            <element signature="e#6958#7195#0" />
-            <element signature="e#7237#7882#0" />
-            <marker date="1548715062136" expanded="true" signature="6089:6093" ph="..." />
+            <marker date="1548716250758" expanded="true" signature="6094:6098" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/motifs_tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="386" lean-forward="true" selection-start-line="386" selection-end-line="386" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <element signature="e#8848#9837#0" />
+            <marker date="1548805388038" expanded="true" signature="15601:16520" ph="..." />
           </folding>
         </state>
       </provider>
