@@ -1,12 +1,13 @@
 import functools
 import itertools
-
+import os
 import math
 from collections import Counter
 from operator import itemgetter
 
 import motifs
 
+# todo move to codons.txt
 rna_codons = {'AAA': 'K',
               'AAC': 'N',
               'AAG': 'K',
@@ -78,7 +79,8 @@ def read_dict_file(name):
     return {k: int(v) for (k, v) in str_dict.items()}
 
 
-aminoacids_mass_map = read_dict_file('data/integer_mass_table.txt')
+integer_mass_table_path = os.path.join(os.path.dirname(__file__), "data", "integer_mass_table.txt")
+aminoacids_mass_map = read_dict_file(integer_mass_table_path)
 aminoacids_masses = list(sorted(set(aminoacids_mass_map.values())))  # todo why must be sorted?
 aminoacids = set(rna_codons.values()) - {''}
 

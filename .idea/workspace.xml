@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8b5132d7-8849-4461-bfe3-684ed748326a" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/data/Bacillus_brevis.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/genomes/Bacillus_brevis.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/Carsonella_ruddii.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/genomes/Carsonella_ruddii.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/E_coli.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/genomes/E_coli.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/Salmonella_enterica.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/genomes/Salmonella_enterica.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aa.py" beforeDir="false" afterPath="$PROJECT_DIR$/aa.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/aa_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/aa_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/motifs_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/motifs_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sequencing_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/sequencing_tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils_tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/utils_tests.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,8 +63,10 @@
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_trim_leaderboard_tie.coverage" NAME="Unittests for aa_tests.AaTests.test_trim_leaderboard_tie Coverage Results" MODIFIED="1536958802315" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests_test_peptide_score_linear.coverage" NAME="Unittests for aa_tests.AaTests.test_peptide_score_linear Coverage Results" MODIFIED="1536958688495" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_number_to_pattern3.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_number_to_pattern3 Coverage Results" MODIFIED="1548716562749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_in_sequencing_tests_py.coverage" NAME="Unittests in sequencing_tests.py Coverage Results" MODIFIED="1549232617125" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_in_aa_tests_py.coverage" NAME="Unittests in aa_tests.py Coverage Results" MODIFIED="1549233265426" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_randomized_motif_search.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_randomized_motif_search Coverage Results" MODIFIED="1548804874555" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/bioinfo$Unittests_in_motifs_tests_py.coverage" NAME="Unittests in motifs_tests.py Coverage Results" MODIFIED="1549232175118" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/bioinfo$Unittests_in_motifs_tests_py.coverage" NAME="Unittests in motifs_tests.py Coverage Results" MODIFIED="1549232628622" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_aa_tests_AaTests.coverage" NAME="Unittests for aa_tests.AaTests Coverage Results" MODIFIED="1536872387749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_in_utils_tests_py.coverage" NAME="Unittests in utils_tests.py Coverage Results" MODIFIED="1548012585803" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/bioinfo$Unittests_for_motifs_tests_MotifsTests_test_number_to_pattern2.coverage" NAME="Unittests for motifs_tests.MotifsTests.test_number_to_pattern2 Coverage Results" MODIFIED="1548716538754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -89,7 +93,7 @@
           <entry key="md" value="1" />
           <entry key="png" value="1" />
           <entry key="pstat" value="2" />
-          <entry key="py" value="54" />
+          <entry key="py" value="59" />
           <entry key="txt" value="17" />
         </counts>
       </usages-collector>
@@ -99,20 +103,20 @@
           <entry key="Markdown" value="1" />
           <entry key="PLAIN_TEXT" value="18" />
           <entry key="Profiler Session" value="2" />
-          <entry key="Python" value="54" />
+          <entry key="Python" value="59" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="Python Console" value="119" />
           <entry key="dummy" value="16" />
-          <entry key="py" value="18050" />
+          <entry key="py" value="18196" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="16" />
-          <entry key="Python" value="18169" />
+          <entry key="Python" value="18315" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts" />
@@ -143,7 +147,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils_tests.py">
+        <entry file="file://$PROJECT_DIR$/tests/utils_tests.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="280">
               <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
@@ -152,10 +156,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/motifs_tests.py">
+        <entry file="file://$PROJECT_DIR$/tests/motifs_tests.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2840">
-              <caret line="229" column="53" selection-start-line="229" selection-start-column="53" selection-end-line="229" selection-end-column="53" />
+            <state relative-caret-position="160">
+              <caret line="145" column="23" selection-start-line="145" selection-start-column="23" selection-end-line="145" selection-end-column="23" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
                 <element signature="e#8848#9837#0" />
@@ -166,10 +170,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/data/integer_mass_table.txt">
+        <entry file="file://$PROJECT_DIR$/aa.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="8" column="5" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="5" />
+            <state relative-caret-position="180">
+              <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#16#0" expanded="true" />
+                <element signature="e#140#1787#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tests/aa_tests.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="40">
+              <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -186,8 +203,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>skew</find>
-      <find>hamm</find>
       <find>1H</find>
       <find>freq</find>
       <find>patter</find>
@@ -216,6 +231,8 @@
       <find>computin</find>
       <find>frequen</find>
       <find>2h</find>
+      <find>integ</find>
+      <find>inter</find>
     </findStrings>
     <replaceStrings>
       <replace>','</replace>
@@ -235,12 +252,14 @@
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/sequencing_tests.py" />
         <option value="$PROJECT_DIR$/sequencing.py" />
-        <option value="$PROJECT_DIR$/aa.py" />
         <option value="$PROJECT_DIR$/aa_tests.py" />
         <option value="$PROJECT_DIR$/utils_tests.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/motifs.py" />
         <option value="$PROJECT_DIR$/motifs_tests.py" />
+        <option value="$PROJECT_DIR$/tests/aa_tests.py" />
+        <option value="$PROJECT_DIR$/__init__.py" />
+        <option value="$PROJECT_DIR$/aa.py" />
       </list>
     </option>
   </component>
@@ -274,6 +293,11 @@
               <item name="bioinfo" type="462c0819:PsiDirectoryNode" />
               <item name="data" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="bioinfo" type="b2602c69:ProjectViewProjectNode" />
+              <item name="bioinfo" type="462c0819:PsiDirectoryNode" />
+              <item name="tests" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -288,6 +312,11 @@
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sendivogius\Desktop\bioinfo\tests" />
+      <recent name="C:\Users\sendivogius\Desktop\bioinfo" />
+      <recent name="C:\Users\sendivogius\Desktop\bioinfo\data\genomes" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\sendivogius\Desktop\bioinfo" />
     </key>
@@ -304,7 +333,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python tests.Unittests for motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative">
+  <component name="RunManager" selected="Python tests.Unittests in aa_tests.py">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -327,7 +356,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for tests.motifs_tests.MotifsTests" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="IntroToBioinf" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -338,11 +367,11 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative&quot;" />
+      <option name="_new_target" value="&quot;tests.motifs_tests.MotifsTests&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests for tests.motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="IntroToBioinf" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -353,38 +382,23 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;motifs_tests.MotifsTests.test_greedy_motif_search_extra&quot;" />
+      <option name="_new_target" value="&quot;tests.motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+    <configuration name="Unittests in aa_tests.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <module name="IntroToBioinf" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
-    <configuration name="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
-      <module name="IntroToBioinf" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/aa_tests.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
     <configuration name="Unittests in motifs_tests.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
@@ -398,7 +412,22 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/motifs_tests.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/motifs_tests.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Unittests in sequencing_tests.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <module name="IntroToBioinf" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/tests" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/tests/sequencing_tests.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
@@ -418,19 +447,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch" />
-      <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch" />
-      <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" />
+      <item itemvalue="Python tests.Unittests for tests.motifs_tests.MotifsTests" />
       <item itemvalue="Python tests.Unittests in motifs_tests.py" />
-      <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative" />
+      <item itemvalue="Python tests.Unittests for tests.motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative" />
+      <item itemvalue="Python tests.Unittests in sequencing_tests.py" />
+      <item itemvalue="Python tests.Unittests in aa_tests.py" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative" />
+        <item itemvalue="Python tests.Unittests in aa_tests.py" />
         <item itemvalue="Python tests.Unittests in motifs_tests.py" />
-        <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" />
-        <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch" />
-        <item itemvalue="Python tests.Unittests for motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch" />
+        <item itemvalue="Python tests.Unittests in sequencing_tests.py" />
+        <item itemvalue="Python tests.Unittests for tests.motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative" />
+        <item itemvalue="Python tests.Unittests for tests.motifs_tests.MotifsTests" />
       </list>
     </recent_temporary>
   </component>
@@ -448,53 +477,54 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_gibs_sampling - 2019.01.30 at 00h 36m 12s.xml">
-      <configuration name="Unittests for motifs_tests.MotifsTests.test_gibs_sampling" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 25m 36s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_gibs_sampling - 2019.01.30 at 00h 36m 17s.xml">
-      <configuration name="Unittests for motifs_tests.MotifsTests.test_gibs_sampling" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 26m 01s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_gibs_sampling - 2019.01.30 at 00h 36m 29s.xml">
-      <configuration name="Unittests for motifs_tests.MotifsTests.test_gibs_sampling" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 26m 16s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration_no_mismatch - 2019.01.30 at 00h 37m 23s.xml">
-      <configuration name="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_no_mismatch" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 26m 34s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_motif_enumeration_one_mismatch - 2019.01.30 at 00h 37m 35s.xml">
-      <configuration name="Unittests for motifs_tests.MotifsTests.test_motif_enumeration_one_mismatch" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 27m 21s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_greedy_motif_search_extra - 2019.01.30 at 00h 38m 23s.xml">
-      <configuration name="Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 32m 52s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_greedy_motif_search_extra - 2019.01.30 at 00h 42m 52s.xml">
-      <configuration name="Unittests for motifs_tests.MotifsTests.test_greedy_motif_search_extra" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 33m 04s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_motifs_tests_py - 2019.02.03 at 23h 16m 18s.xml">
-      <configuration name="Unittests in motifs_tests.py" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 33m 41s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_get_profile_pseudo_no_relative - 2019.02.03 at 23h 17m 03s.xml">
-      <configuration name="Unittests for motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 33m 56s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_for_motifs_tests_MotifsTests_test_get_profile_pseudo_no_relative - 2019.02.03 at 23h 17m 13s.xml">
-      <configuration name="Unittests for motifs_tests.MotifsTests.test_get_profile_pseudo_no_relative" configurationId="tests" />
+    <history-entry file="Unittests_in_aa_tests_py - 2019.02.03 at 23h 34m 30s.xml">
+      <configuration name="Unittests in aa_tests.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12793177" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49733475" weight="0.32827735" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.72228146" visible="true" weight="0.39761648" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7254797" weight="0.22318527" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.72121537" visible="true" weight="0.39761648" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.72441363" weight="0.22318527" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32936078" />
       <window_info anchor="bottom" id="Terminal" order="8" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.27771854" side_tool="true" visible="true" weight="0.39761648" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.27878466" side_tool="true" visible="true" weight="0.39761648" />
       <window_info anchor="bottom" id="Python Console" order="10" sideWeight="0.4989339" weight="0.32827735" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="12" show_stripe_button="false" />
@@ -548,39 +578,49 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/sequencing_tests.py</url>
+          <url>file://$PROJECT_DIR$/tests/sequencing_tests.py</url>
           <line>233</line>
           <option name="timeStamp" value="187" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/sequencing_tests.py</url>
+          <url>file://$PROJECT_DIR$/tests/sequencing_tests.py</url>
           <line>188</line>
           <option name="timeStamp" value="188" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/aa.py</url>
-          <line>283</line>
+          <line>285</line>
           <option name="timeStamp" value="275" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/aa.py</url>
-          <line>164</line>
+          <line>166</line>
           <option name="timeStamp" value="277" />
         </line-breakpoint>
         <line-breakpoint suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/aa_tests.py</url>
+          <url>file://$PROJECT_DIR$/tests/aa_tests.py</url>
           <line>207</line>
           <option name="timeStamp" value="279" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/aa.py</url>
-          <line>273</line>
+          <line>275</line>
           <option name="timeStamp" value="307" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/motifs_tests.py</url>
+          <url>file://$PROJECT_DIR$/tests/motifs_tests.py</url>
           <line>267</line>
           <option name="timeStamp" value="311" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/aa.py</url>
+          <line>246</line>
+          <option name="timeStamp" value="314" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/aa.py</url>
+          <line>10</line>
+          <option name="timeStamp" value="316" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
@@ -683,20 +723,10 @@
     <entry file="file://$PROJECT_DIR$/peptide_number_by_mass_approx.csv">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/contextlib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="440">
           <caret line="98" selection-start-line="98" selection-end-line="98" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sequencing_tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="221" selection-start-line="221" selection-end-line="221" />
         </state>
       </provider>
     </entry>
@@ -747,23 +777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/aa.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6780">
-          <caret line="346" column="8" selection-start-line="346" selection-start-column="8" selection-end-line="346" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/aa_tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="145">
-          <caret line="183" column="802" selection-start-line="183" selection-start-column="22" selection-end-line="183" selection-end-column="802" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="140">
@@ -785,7 +798,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils_tests.py">
+    <entry file="file://$PROJECT_DIR$/tests/utils_tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
@@ -809,10 +822,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/motifs_tests.py">
+    <entry file="file://$PROJECT_DIR$/data/integer_mass_table.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2840">
-          <caret line="229" column="53" selection-start-line="229" selection-start-column="53" selection-end-line="229" selection-end-column="53" />
+        <state relative-caret-position="160">
+          <caret line="8" column="5" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/motifs_tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="145" column="23" selection-start-line="145" selection-start-column="23" selection-end-line="145" selection-end-column="23" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
             <element signature="e#8848#9837#0" />
@@ -821,10 +841,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data/integer_mass_table.txt">
+    <entry file="file://$PROJECT_DIR$/tests/sequencing_tests.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="8" column="5" selection-start-line="8" selection-start-column="2" selection-end-line="8" selection-end-column="5" />
+        <state relative-caret-position="182">
+          <caret line="165" column="8" selection-start-line="165" selection-start-column="8" selection-end-line="165" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/unittest/loader.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="152" selection-start-line="152" selection-end-line="152" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/aa_tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="40">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/__init__.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/aa.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="9" column="25" selection-start-line="9" selection-start-column="25" selection-end-line="9" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+            <element signature="e#140#1787#0" />
+          </folding>
         </state>
       </provider>
     </entry>
