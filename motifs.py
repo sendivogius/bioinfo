@@ -11,41 +11,7 @@ from utils import is_dna
 _rev_mapping = {'C': 'G', 'G': 'C', 'A': 'T', 'T': 'A'}
 
 
-def reverse_complement_strand(dna):
-    """Compute reverse complement strand for given dna (1C in BA_AALA)
-    :param dna: ACTG string
-    :return: reversed complement strand
-    """
-    assert (is_dna(dna))
-    return ''.join(_rev_mapping[nn] for nn in dna[::-1])
-
-
-def get_all_kmers(pattern, k, ordered=False):
-    """Returns all kmers for pattern
-    Depending on `ordered` returns all kmers as they appear in `pattern` or set of unique kmers
-
-    :param pattern: string to look for kmers
-    :param k: length of kmer
-    :param ordered: boolean flag
-    :return: list or se of kmers, depending o `ordered` parameter
-    """
-    ordered_kmers = [pattern[i:i + k] for i in range(len(pattern) - k + 1)]
-    if ordered:
-        return ordered_kmers
-    return set(ordered_kmers)
-
-
-def find_occurrences(text, pattern, d=0):
-    """Get indexes of (possibly overlapping) occurrences of `pattern` in `text` with up to `d` mismatches
-    1D (k=0) and 1H (k>0) in BA_AALA
-    :param text: string to search in
-    :param pattern: string to look for
-    :param d: int, maximum number of mismatches (aka Hamming distance)
-    :return: list of indices where pattern appears in text
-    """
-    idx_of_last_pattern = len(text) - len(pattern)
-    return [i for i in range(idx_of_last_pattern + 1) if hamming(text[i:i + len(pattern)], pattern) <= d]
-
+### Solutions to problems in BA AALA Chapter 1
 
 def count_occurrences(text, pattern, d=0):
     """Count number of (possibly overlapping) occurrences of pattern in text (1A in BA_AALA)
@@ -88,36 +54,25 @@ def frequent_kmers(genome, k, d=0, reverse=False):
     return set(max_kmers), max_kmers_cnt
 
 
-def _get_neighbours(kmer):
-    """Get immediate neighbours of kmer
-
-    :param kmer: ACTG string
-    :return: set of neighbours kmers
+def reverse_complement_strand(dna):
+    """Compute reverse complement strand for given dna (1C in BA_AALA)
+    :param dna: ACTG string
+    :return: reversed complement strand
     """
-    assert (is_dna(kmer))
-    bases = 'ACTG'
-    result = set()
-    for i in range(len(kmer)):
-        for base in bases:
-            result.add(kmer[:i] + base + kmer[(i + 1):])
-    return result
+    assert (is_dna(dna))
+    return ''.join(_rev_mapping[nn] for nn in dna[::-1])
 
 
-def get_neighbours(kmer, max_d):
-    """Generate all kmers of distance at most max_d to kmer (1N in BA_AALA)
-
-    :param kmer: ACTG string
-    :param max_d: maximum Hamming distance
-    :return: set of neighbours dnas
+def find_occurrences(text, pattern, d=0):
+    """Get indexes of (possibly overlapping) occurrences of `pattern` in `text` with up to `d` mismatches
+    1D (k=0) and 1H (k>0) in BA_AALA
+    :param text: string to search in
+    :param pattern: string to look for
+    :param d: int, maximum number of mismatches (aka Hamming distance)
+    :return: list of indices where pattern appears in text
     """
-    assert (is_dna(kmer))
-    result = set([kmer])
-    for i in range(max_d):
-        addded = set()
-        for kmer in result:
-            addded |= _get_neighbours(kmer)
-        result |= addded
-    return result
+    idx_of_last_pattern = len(text) - len(pattern)
+    return [i for i in range(idx_of_last_pattern + 1) if hamming(text[i:i + len(pattern)], pattern) <= d]
 
 
 def _get_keys(dict_, t):
@@ -153,6 +108,27 @@ def find_clumps(genome, k, L, t):
     return kmers
 
 
+def get_min_skew_position(genome):
+    """Find a position in a genome where the skew attain a minumum (1F in BA_AALA)
+
+    :param genome: ACTG string
+    :return: list of all integers minimizing skew
+    """
+    assert (is_dna(genome))
+    skew = get_skew(genome)
+    min_skew = min(skew)
+    return [pos for (pos, sk) in enumerate(skew) if sk == min_skew]
+
+
+def hamming(text1, text2):
+    """Calculate Hamming distance between two strings of equal length (1G in BA_AALA)
+
+    :return: The Hamming distance between input strings
+    """
+    assert (len(text1) == len(text2))
+    return sum(a != b for a, b in zip(text1, text2))
+
+
 def pattern_to_number(dna):
     """Computes number corresponding to dna pattern (1L in BA_AALA)
 
@@ -165,7 +141,7 @@ def pattern_to_number(dna):
 
 
 def number_to_pattern(number, length):
-    """Computes dna pattern for given number (1K in BA_AALA)
+    """Computes dna pattern for given number (1M in BA_AALA)
 
     :param number:
     :param length: length of returned kmer
@@ -178,6 +154,66 @@ def number_to_pattern(number, length):
         pattern += idx[number % 4]
         number //= 4
     return idx[0] * (length - len(pattern)) + pattern[::-1]
+
+
+def get_neighbours(kmer, max_d):
+    """Generate all kmers of distance at most max_d to kmer (1N in BA_AALA)
+
+    :param kmer: ACTG string
+    :param max_d: maximum Hamming distance
+    :return: set of neighbours dnas
+    """
+    assert (is_dna(kmer))
+    result = set([kmer])
+    for i in range(max_d):
+        addded = set()
+        for kmer in result:
+            addded |= _get_neighbours(kmer)
+        result |= addded
+    return result
+
+
+### Helpful functions to problems in BA AALA Chapter 1
+
+def get_all_kmers(pattern, k, ordered=False):
+    """Returns all kmers for pattern
+    Depending on `ordered` returns all kmers as they appear in `pattern` or set of unique kmers
+
+    :param pattern: string to look for kmers
+    :param k: length of kmer
+    :param ordered: boolean flag
+    :return: list or se of kmers, depending o `ordered` parameter
+    """
+    ordered_kmers = [pattern[i:i + k] for i in range(len(pattern) - k + 1)]
+    if ordered:
+        return ordered_kmers
+    return set(ordered_kmers)
+
+
+def _get_neighbours(kmer):
+    """Get immediate neighbours of kmer
+
+    :param kmer: ACTG string
+    :return: set of neighbours kmers
+    """
+    assert (is_dna(kmer))
+    bases = 'ACTG'
+    result = set()
+    for i in range(len(kmer)):
+        for base in bases:
+            result.add(kmer[:i] + base + kmer[(i + 1):])
+    return result
+
+
+def plot_skew(genome):
+    assert (is_dna(genome))
+    import matplotlib.pyplot as plt
+    skew = get_skew(genome)
+    plt.plot(skew, '-')
+    plt.title('Skew plot')
+    plt.ylabel('skew')
+    plt.xlabel('position')
+    plt.show()
 
 
 def get_skew(genome):
@@ -198,37 +234,7 @@ def get_skew(genome):
     return skew
 
 
-def get_min_skew_position(genome):
-    """Find a position in a genome where the skew attain a minumum (1F in BA_AALA)
-
-    :param genome: ACTG string
-    :return: list of all integers minimizing skew
-    """
-    assert (is_dna(genome))
-    skew = get_skew(genome)
-    min_skew = min(skew)
-    return [pos for (pos, sk) in enumerate(skew) if sk == min_skew]
-
-
-def plot_skew(genome):
-    assert (is_dna(genome))
-    import matplotlib.pyplot as plt
-    skew = get_skew(genome)
-    plt.plot(skew, '-')
-    plt.title('Skew plot')
-    plt.ylabel('skew')
-    plt.xlabel('position')
-    plt.show()
-
-
-def hamming(text1, text2):
-    """Calculate Hamming distance between two strings of equal length (1G in BA_AALA)
-
-    :return: The Hamming distance between input strings
-    """
-    assert (len(text1) == len(text2))
-    return sum(a != b for a, b in zip(text1, text2))
-
+### Solutions to problems in BA AALA Chapter 2
 
 def motif_enumeration(dnas, k, d):
     """Brute force algorithm for solving `Implanted Motif Problem` (2A in BA_AALA)
@@ -239,7 +245,7 @@ def motif_enumeration(dnas, k, d):
     :param d: number of mismatches
     :return: set of (k,d)-motifs
     """
-    assert(all(is_dna(dna) for dna in dnas))
+    assert (all(is_dna(dna) for dna in dnas))
     patterns = set()
     for kmer in get_all_kmers(dnas[0], k):
         for kmer_neigh in get_neighbours(kmer, d):
@@ -247,6 +253,117 @@ def motif_enumeration(dnas, k, d):
             if all(counts):
                 patterns.add(kmer_neigh)
     return patterns
+
+
+def median_string(dnas, k):
+    """Find a median string (2B in BA_AALA)
+    Median string is a kmer that minimizes d(pattern, dnas) among all possible kmers
+
+    :param dnas: list of ACTG strings
+    :param k: length of kmer
+    :return: tuple(median_string, dist_median_dnas)
+    """
+    assert (all(is_dna(dna) for dna in dnas))
+    all_kmers = map(''.join, itertools.product('ACTG', repeat=k))
+    return min(((kmer, dist(kmer, dnas)) for kmer in all_kmers), key=operator.itemgetter(1))
+
+
+def most_probable_kmer_from_profile(dna, profile):
+    """Find a most probably kmer in a string (2C in BA_AALA)
+
+    :param dna: ACTG string
+    :param profile: list of dicts with probabilities
+    :return: profile most probably kmer
+    """
+    assert (is_dna(dna))
+
+    k = len(profile)
+    score, kmer = max([(score_kmer_on_profile(kmer, profile), kmer) for kmer in get_all_kmers(dna, k, ordered=True)],
+                      key=operator.itemgetter(0))
+    return kmer
+
+
+def greedy_motif_search(dnas, k):
+    """Finds bets motifs in greedy way (selecting best motifs at each iteration)
+    Includes pseudocounts (Laplacian smoothing)
+    (2D and 2E in BA_AALA)
+
+    :param dnas: list of ACTG strings
+    :param k: length of kmer
+    :return: tuple(best_motifs, best_score)
+    """
+    assert (all(is_dna(dna) for dna in dnas))
+
+    best_motifs, best_score = _get_first_kmers(dnas, k)
+
+    for kmer in get_all_kmers(dnas[0], k, ordered=True):
+        motifs = [kmer]
+        for i in range(1, len(dnas)):
+            profile = get_profile(motifs, pseudocounts=True)
+            motif = most_probable_kmer_from_profile(dnas[i], profile)
+            motifs.append(motif)
+        motifs_score = score_motifs(motifs)
+        if motifs_score < best_score:
+            best_motifs = motifs
+            best_score = motifs_score
+    return best_motifs, best_score
+
+
+def randomized_motif_search(dnas, k, times=2000):
+    """Finds bets motifs by randomly selecting set of initial kmers and then iteratively improving profile
+    (2F in BA_AALA)
+
+    :param dnas: list of ACTG strings
+    :param k: length of kmer
+    :param times: number of time the algorithm will be run with different initial kmers
+    :return: tuple(best_motifs, best_score) from `times` runs
+    """
+    assert (all(is_dna(dna) for dna in dnas))
+
+    best_motifs, best_score = _get_first_kmers(dnas, k)
+    for run in range(times):
+        motifs = [get_random_motif(d, k) for d in dnas]
+        while True:
+            profile = get_profile(motifs, pseudocounts=True)
+            motifs = [most_probable_kmer_from_profile(dna, profile) for dna in dnas]
+            motifs_score = score_motifs(motifs)
+            if motifs_score < best_score:
+                best_motifs = motifs
+                best_score = motifs_score
+            else:
+                break
+    return best_motifs, best_score
+
+
+def gibbs_sampler(dnas, k, N=100, times=1000):
+    """Finds bets motifs by using Gibbs sampling (2G in BA_AALA)
+    Exclude single kmer from current motifs set and decide whether to keep it or replace.
+
+    :param dnas: list of ACTG strings
+    :param k: length of kmer
+    :param N: number of iterations in one sampling run
+    :param times: number of time sampling will be performed with different initial kmers
+    :return: tuple(best_motifs, best_score) from `times` runs
+    """
+    assert (all(is_dna(dna) for dna in dnas))
+
+    best_motifs, best_score = _get_first_kmers(dnas, k)
+    n_dna = len(dnas)
+    for run in range(times):
+        motifs = [get_random_motif(dna, k) for dna in dnas]
+        for _ in range(N):
+            exclude = randrange(n_dna)
+            motifs_excluded = [motifs[i] for i in range(n_dna) if i != exclude]
+            profile = get_profile(motifs_excluded, pseudocounts=True)
+            motifs[exclude] = get_profile_randomly_generated_kmer(dnas[exclude], profile)
+            motifs_score = score_motifs(motifs)
+            if motifs_score < best_score:
+                best_motifs = motifs
+                best_score = motifs_score
+    return best_motifs, best_score
+
+
+### Helpful functions to problems in BA AALA Chapter 2
 
 
 def get_profile(motifs, relative=True, pseudocounts=False):
@@ -312,26 +429,13 @@ def dist(pattern, dnas):
     if type(dnas) == str:
         dnas = [dnas]
 
-    assert(is_dna(pattern))
-    assert(all(is_dna(dna) for dna in dnas))
+    assert (is_dna(pattern))
+    assert (all(is_dna(dna) for dna in dnas))
 
     def dist_to_single_dna(pat, dna_string):
         return min(hamming(pat, kmer) for kmer in get_all_kmers(dna_string, len(pat)))
 
     return sum(dist_to_single_dna(pattern, dna) for dna in dnas)
-
-
-def median_string(dnas, k):
-    """Find a median string (2B in BA_AALA)
-    Median string is a kmer that minimizes d(pattern, dnas) among all possible kmers
-
-    :param dnas: list of ACTG strings
-    :param k: length of kmer
-    :return: tuple(median_string, dist_median_dnas)
-    """
-    assert(all(is_dna(dna) for dna in dnas))
-    all_kmers = map(''.join, itertools.product('ACTG', repeat=k))
-    return min(((kmer, dist(kmer, dnas)) for kmer in all_kmers), key=operator.itemgetter(1))
 
 
 def score_kmer_on_profile(kmer, profile):
@@ -341,51 +445,10 @@ def score_kmer_on_profile(kmer, profile):
     :param profile: list of dicts with probabilities
     :return:
     """
-    assert(is_dna(kmer))
+    assert (is_dna(kmer))
     assert (len(kmer) == len(profile))
     proba_kmer = (p[k] for p, k in zip(profile, kmer))
     return functools.reduce(operator.mul, proba_kmer, 1)
-
-
-def most_probable_kmer_from_profile(dna, profile):
-    """Find a most probably kmer in a string (2C in BA_AALA)
-
-    :param dna: ACTG string
-    :param profile: list of dicts with probabilities
-    :return: profile most probably kmer
-    """
-    assert(is_dna(dna))
-
-    k = len(profile)
-    score, kmer = max([(score_kmer_on_profile(kmer, profile), kmer) for kmer in get_all_kmers(dna, k, ordered=True)],
-               key=operator.itemgetter(0))
-    return kmer
-
-
-def greedy_motif_search(dnas, k):
-    """Finds bets motifs in greedy way (selecting best motifs at each iteration)
-    Includes pseudocounts (Laplacian smoothing)
-    (2D and 2E in BA_AALA)
-
-    :param dnas: list of ACTG strings
-    :param k: length of kmer
-    :return: tuple(best_motifs, best_score)
-    """
-    assert (all(is_dna(dna) for dna in dnas))
-
-    best_motifs, best_score = _get_first_kmers(dnas, k)
-
-    for kmer in get_all_kmers(dnas[0], k, ordered=True):
-        motifs = [kmer]
-        for i in range(1, len(dnas)):
-            profile = get_profile(motifs, pseudocounts=True)
-            motif = most_probable_kmer_from_profile(dnas[i], profile)
-            motifs.append(motif)
-        motifs_score = score_motifs(motifs)
-        if motifs_score < best_score:
-            best_motifs = motifs
-            best_score = motifs_score
-    return best_motifs, best_score
 
 
 def _get_first_kmers(dnas, k):
@@ -408,36 +471,10 @@ def get_random_motif(dna, k):
     :param k: length of kmer
     :return: random kmer from dns
     """
-    assert(is_dna(dna))
-    assert(len(dna) - k + 1 > 0)
+    assert (is_dna(dna))
+    assert (len(dna) - k + 1 > 0)
     start = randrange(len(dna) - k + 1)
     return dna[start:start + k]
-
-
-def randomized_motif_search(dnas, k, times=2000):
-    """Finds bets motifs by randomly selecting set of initial kmers and then iteratively improving profile
-    (2F in BA_AALA)
-
-    :param dnas: list of ACTG strings
-    :param k: length of kmer
-    :param times: number of time the algorithm will be run with different initial kmers
-    :return: tuple(best_motifs, best_score) from `times` runs
-    """
-    assert (all(is_dna(dna) for dna in dnas))
-
-    best_motifs, best_score = _get_first_kmers(dnas, k)
-    for run in range(times):
-        motifs = [get_random_motif(d, k) for d in dnas]
-        while True:
-            profile = get_profile(motifs, pseudocounts=True)
-            motifs = [most_probable_kmer_from_profile(dna, profile) for dna in dnas]
-            motifs_score = score_motifs(motifs)
-            if motifs_score < best_score:
-                best_motifs = motifs
-                best_score = motifs_score
-            else:
-                break
-    return best_motifs, best_score
 
 
 def get_profile_randomly_generated_kmer(dna, profile):
@@ -447,7 +484,7 @@ def get_profile_randomly_generated_kmer(dna, profile):
     :param profile: list of dicts with probabilities
     :return: random kmer with probabilities defined by profile
     """
-    assert(is_dna(dna))
+    assert (is_dna(dna))
 
     k = len(profile)
     kmer_probs = [(kmer, score_kmer_on_profile(kmer, profile)) for kmer in get_all_kmers(dna, k)]
@@ -456,35 +493,6 @@ def get_profile_randomly_generated_kmer(dna, profile):
     normalized_probs = [p / total_prob for p in probs]
     draw = numpy.random.choice(kmers, 1, p=normalized_probs)
     return draw[0]
-
-
-def gibbs_sampler(dnas, k, N=100, times=1000):
-    """Finds bets motifs by using Gibbs sampling (2G in BA_AALA)
-    Excude single kmer from current motifs set and decide whether to keep it or replace.
-
-
-    :param dnas: list of ACTG strings
-    :param k: length of kmer
-    :param N: number of iterations in one sampling run
-    :param times: number of time sampling will be performed with different initial kmers
-    :return: tuple(best_motifs, best_score) from `times` runs
-    """
-    assert (all(is_dna(dna) for dna in dnas))
-
-    best_motifs, best_score = _get_first_kmers(dnas, k)
-    n_dna = len(dnas)
-    for run in range(times):
-        motifs = [get_random_motif(dna, k) for dna in dnas]
-        for _ in range(N):
-            exclude = randrange(n_dna)
-            motifs_excluded = [motifs[i] for i in range(n_dna) if i != exclude]
-            profile = get_profile(motifs_excluded, pseudocounts=True)
-            motifs[exclude] = get_profile_randomly_generated_kmer(dnas[exclude], profile)
-            motifs_score = score_motifs(motifs)
-            if motifs_score < best_score:
-                best_motifs = motifs
-                best_score = motifs_score
-    return best_motifs, best_score
 
 
 if __name__ == "__main__":

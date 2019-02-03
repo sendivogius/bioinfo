@@ -227,7 +227,7 @@ class MotifsTests(unittest.TestCase):
                     {'A': 2, 'C': 2, 'G': 1, 'T': 9},
                     {'A': 2, 'C': 3, 'G': 1, 'T': 8},
                     {'A': 4, 'C': 5, 'G': 1, 'T': 4},
-                    {'A': 1, 'C': 7, 'G': 1, 'T': 5}, ],
+                    {'A': 1, 'C': 7, 'G': 1, 'T': 5}]
         actual = motifs.get_profile(patterns, relative=False, pseudocounts=True)
         self.assertEqual(expected, actual)
 
