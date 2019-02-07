@@ -6,7 +6,7 @@ from math import log2
 from random import randrange
 import numpy.random
 
-from utils import is_dna
+from utils import is_dna, get_genome
 
 _rev_mapping = {'C': 'G', 'G': 'C', 'A': 'T', 'T': 'A'}
 
@@ -496,5 +496,5 @@ def get_profile_randomly_generated_kmer(dna, profile):
 
 
 if __name__ == "__main__":
-    ecoli = open('data\\E_coli.txt').readline()
-    plot_skew('TAAAGACTGCCGAGAGGCCAACACGAGTGCTAGAACGAGGGGCGTAAACGCGGGTCCGAT')
+    ecoli = get_genome('E_coli')
+    plot_skew(ecoli)
