@@ -6,7 +6,7 @@ from math import log2
 from random import randrange
 import numpy.random
 
-from utils import is_dna, get_genome
+from baal.utils import is_dna, get_genome
 
 _rev_mapping = {'C': 'G', 'G': 'C', 'A': 'T', 'T': 'A'}
 

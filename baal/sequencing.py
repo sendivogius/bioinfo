@@ -1,7 +1,6 @@
 import itertools
 
-import motifs
-from printing import print_list_as_path
+from baal import motifs
 
 
 def composition(dna, k):

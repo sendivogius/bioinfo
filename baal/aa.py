@@ -5,7 +5,7 @@ import math
 from collections import Counter
 from operator import itemgetter
 
-import motifs
+from baal import motifs
 
 # todo move to codons.txt
 rna_codons = {'AAA': 'K',
@@ -334,7 +334,6 @@ def spectral_convolution(spectrum, min_mass=57, max_mass=200):
 if __name__ == "__main__":
     # approx_pept_mass(200, 1500, 10)
     pep = [97, 71, 115, 147, 114, 128, 163, 99, 128, 113, 147]
-    import pprint
 
     spec_10 = Counter(
         [0, 97, 99, 114, 128, 147, 147, 163, 186, 227, 241, 242, 244, 260, 261, 262, 283, 291, 333, 340, 357, 385, 389,

@@ -1,4 +1,4 @@
-import motifs
+from baal import motifs
 
 
 def find_ori(file, txt=''):

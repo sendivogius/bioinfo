@@ -1,5 +1,5 @@
 import unittest
-import sequencing
+from baal import sequencing
 
 
 class SequencingTests(unittest.TestCase):

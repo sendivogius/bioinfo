@@ -1,6 +1,6 @@
 import unittest
 
-from utils import is_dna
+from baal.utils import is_dna
 
 
 class UtilsTests(unittest.TestCase):

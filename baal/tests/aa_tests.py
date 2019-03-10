@@ -1,7 +1,7 @@
 import unittest
 from collections import Counter
 
-import aa
+from baal import aa
 
 
 class AaTests(unittest.TestCase):

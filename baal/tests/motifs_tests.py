@@ -1,5 +1,5 @@
 import unittest
-import motifs
+from baal import motifs
 
 
 class MotifsTests(unittest.TestCase):
